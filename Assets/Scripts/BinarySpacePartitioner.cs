@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class BinarySpacePartitioner : MonoBehaviour
 { 
-    Room rootRoom;
+    public RoomNode rootRoom;
 
     public BinarySpacePartitioner(int dgWidth, int dgLength)
     {
-       this.rootRoom = new Room(null, 0, new Vector2Int(0, 0), new Vector2Int(dgWidth, dgLength));
+       this.rootRoom = new RoomNode(null, 0, new Vector2Int(0, 0), new Vector2Int(dgWidth, dgLength));
     }
 
-    public List<Room> calculateRooms(int maxIt, int minRoomWidth, int minRoomLength)
+    public List<RoomNode> calculateRooms(int maxIt, int minRoomWidth, int minRoomLength)
     {
-        Queue<Room> roomQueue = new Queue<Room>();
-        List<Room> rooms = new List<Room>();
+        Queue<RoomNode> roomQueue = new Queue<RoomNode>();
+        List<RoomNode> rooms = new List<RoomNode>();
         rooms.Add(rootRoom);
         roomQueue.Enqueue(rootRoom);
         int it = 0;
@@ -23,34 +23,36 @@ public class BinarySpacePartitioner : MonoBehaviour
         while (it < maxIt && roomQueue.Count > 0)
         {
             it++;
-            Room currentRoom = roomQueue.Dequeue();
+            RoomNode currentRoom = roomQueue.Dequeue();
             if(currentRoom.width > minRoomWidth * 2 && currentRoom.length > minRoomLength * 2)
                 splitRoom(currentRoom, roomQueue, rooms, minRoomLength, minRoomWidth);
         }
         return rooms;
     }
 
-    private void splitRoom(Room currentRoom, Queue<Room> roomQueue, List<Room> rooms, int minRoomLength, int minRoomWidth)
+    private void splitRoom(RoomNode currentRoom, Queue<RoomNode> roomQueue, List<RoomNode> rooms, int minRoomLength, int minRoomWidth)
     {
         Line divideLine = createDivideLine(currentRoom, minRoomLength, minRoomWidth);
-        Room room1, room2;
+        RoomNode room1, room2;
         if(divideLine.orientation == Orientation.Horizontal)
         {
-            room1 = new Room(currentRoom, currentRoom.treeIndex + 1, currentRoom.bottomLeft, new Vector2Int(currentRoom.upperRight.x, divideLine.point.y));
-            room2 = new Room(currentRoom, currentRoom.treeIndex + 1, new Vector2Int(currentRoom.bottomLeft.x, divideLine.point.y), currentRoom.upperRight);
+            room1 = new RoomNode(currentRoom, currentRoom.treeIndex + 1, currentRoom.bottomLeft, new Vector2Int(currentRoom.topRight.x, divideLine.point.y));
+            room2 = new RoomNode(currentRoom, currentRoom.treeIndex + 1, new Vector2Int(currentRoom.bottomLeft.x, divideLine.point.y), currentRoom.topRight);
         }
         else
         {
-            room1 = new Room(currentRoom, currentRoom.treeIndex + 1, currentRoom.bottomLeft, new Vector2Int(divideLine.point.x, currentRoom.upperRight.y));
-            room2 = new Room(currentRoom, currentRoom.treeIndex + 1, new Vector2Int(divideLine.point.x, currentRoom.bottomLeft.y), currentRoom.upperRight);
+            room1 = new RoomNode(currentRoom, currentRoom.treeIndex + 1, currentRoom.bottomLeft, new Vector2Int(divideLine.point.x, currentRoom.topRight.y));
+            room2 = new RoomNode(currentRoom, currentRoom.treeIndex + 1, new Vector2Int(divideLine.point.x, currentRoom.bottomLeft.y), currentRoom.topRight);
         }
         rooms.Add(room1);
         rooms.Add(room2);
         roomQueue.Enqueue(room1);
         roomQueue.Enqueue(room2);
+        currentRoom.children.Add(room1);
+        currentRoom.children.Add(room2);
     }
 
-    private Line createDivideLine(Room currentRoom, int minRoomLength, int minRoomWidth)
+    private Line createDivideLine(RoomNode currentRoom, int minRoomLength, int minRoomWidth)
     {
         Orientation orientation;
         Vector2Int point;
@@ -72,12 +74,12 @@ public class BinarySpacePartitioner : MonoBehaviour
         
         if(orientation == Orientation.Vertical)
         {
-            int x = UnityEngine.Random.Range(currentRoom.bottomLeft.x + minRoomWidth, currentRoom.upperRight.x - minRoomWidth);
+            int x = UnityEngine.Random.Range(currentRoom.bottomLeft.x + minRoomWidth, currentRoom.topRight.x - minRoomWidth);
             point = new Vector2Int(x, currentRoom.bottomLeft.y);
         }
         else
         {
-            int y = UnityEngine.Random.Range(currentRoom.bottomLeft.y + minRoomLength, currentRoom.upperRight.y - minRoomLength);
+            int y = UnityEngine.Random.Range(currentRoom.bottomLeft.y + minRoomLength, currentRoom.topRight.y - minRoomLength);
             point = new Vector2Int(currentRoom.bottomLeft.x, y);
         }
 

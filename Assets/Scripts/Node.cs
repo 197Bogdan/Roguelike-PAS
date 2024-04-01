@@ -7,7 +7,7 @@ public abstract class Node : MonoBehaviour
     public Node parent;
     public int treeIndex;
     public bool visited;
-    public Vector2Int bottomLeft, bottomRight, upperLeft, upperRight;
+    public Vector2Int bottomLeft, bottomRight, topLeft, topRight;
     public List<Node> children;
 
     public Node(Node parentNode)
