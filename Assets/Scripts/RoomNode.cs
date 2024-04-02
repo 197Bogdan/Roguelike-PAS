@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 public class RoomNode : Node
 {
-    public RoomNode(Node parent, int treeIndex, Vector2Int bottomLeft, Vector2Int upperRight): base(parent)
+    public RoomNode(Vector2Int bottomLeft, Vector2Int topRight, Node parentNode, int index) : base(parentNode)
     {
-        this.treeIndex = treeIndex;
         this.bottomLeft = bottomLeft;
-        this.topRight = upperRight;
-        this.bottomRight = new Vector2Int(upperRight.x, bottomLeft.y);
-        this.topLeft = new Vector2Int(bottomLeft.x, upperRight.y);
+        this.topRight = topRight;
+        this.bottomRight = new Vector2Int(topRight.x, bottomLeft.y);
+        this.topLeft = new Vector2Int(bottomLeft.x, base.topRight.y);
+        this.treeIndex = index;
     }
-    public int width { get { return topRight.x - bottomLeft.x; } }
-    public int length { get { return topRight.y - bottomLeft.y; } }
-    
 
+    public int Width { get => (int)(topRight.x - bottomLeft.x); }
+    public int Length { get => (int)(topRight.y - bottomLeft.y); }
 }

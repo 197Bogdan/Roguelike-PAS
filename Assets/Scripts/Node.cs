@@ -1,23 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class Node : MonoBehaviour
+public abstract class Node
 {
+    private List<Node> childrenNodeList;
+    public List<Node> children { get => childrenNodeList; }
+
+    public Vector2Int bottomLeft { get; set; }
+    public Vector2Int bottomRight { get; set; }
+    public Vector2Int topRight { get; set; }
+    public Vector2Int topLeft { get; set; }
     public Node parent;
     public int treeIndex;
-    public bool visited;
-    public Vector2Int bottomLeft, bottomRight, topLeft, topRight;
-    public List<Node> children;
 
     public Node(Node parentNode)
     {
-        this.children = new List<Node>();
+        childrenNodeList = new List<Node>();
         this.parent = parentNode;
-        
         if (parentNode != null)
         {
-            parentNode.children.Add(this);
+            parentNode.AddChild(this);
         }
     }
+
+    public void AddChild(Node node)
+    {
+        childrenNodeList.Add(node);
+
     }
+
+    public void RemoveChild(Node node)
+    {
+        childrenNodeList.Remove(node);
+    }
+}

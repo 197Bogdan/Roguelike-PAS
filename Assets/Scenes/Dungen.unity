@@ -301,19 +301,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1930850472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea3a2519a37f14843b3515eca30d60d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d6af3b9886914a41b9b95623fb0826b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dgWidth: 100
-  dgLength: 100
-  minRoomWidth: 20
-  minRoomLength: 20
-  maxIt: 10
+  dungeonWidth: 200
+  dungeonLength: 200
+  roomWidthMin: 25
+  roomLengthMin: 25
+  maxIterations: 30
   corridorWidth: 5
   material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  leftModifier: 0.112
-  rightModifier: 0.109
+  roomBottomModifier: 0.1
+  roomTopModifier: 0.9
   roomOffset: 1
+  wallVertical: {fileID: 0}
+  wallHorizontal: {fileID: 0}
 --- !u!1 &2107771231
 GameObject:
   m_ObjectHideFlags: 0

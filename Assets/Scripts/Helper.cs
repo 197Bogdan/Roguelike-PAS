@@ -1,73 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-internal class Helper
+public static class Helper
 {
-    public static List<Node> extractLeaves(Node root)
+    public static List<Node> getLeaves(Node parentNode)
     {
-        Queue<Node> nodes = new Queue<Node>();
+        Queue<Node> nodeQueue = new Queue<Node>();
         List<Node> leaves = new List<Node>();
-        if (root.children.Count == 0)
-            return new List<Node> { root };
-        foreach (Node child in root.children)
+        if (parentNode.children.Count == 0)
         {
-            nodes.Enqueue(child);
+            return new List<Node>() { parentNode };
         }
-        while (nodes.Count > 0)
+        foreach (var child in parentNode.children)
         {
-            Node node = nodes.Dequeue();
-            if (node.children.Count == 0)
+            nodeQueue.Enqueue(child);
+        }
+        while (nodeQueue.Count > 0)
+        {
+            var currentNode = nodeQueue.Dequeue();
+            if (currentNode.children.Count == 0)
             {
-                leaves.Add(node);
+                leaves.Add(currentNode);
             }
             else
             {
-                foreach (Node child in node.children)
+                foreach (var child in currentNode.children)
                 {
-                    nodes.Enqueue(child);
+                    nodeQueue.Enqueue(child);
                 }
             }
         }
         return leaves;
     }
 
-    public static Vector2Int generateBottomLeft(Vector2Int bottomLeft, Vector2Int topRight, float modifier, int offset)
+    public static Vector2Int generateBottomLeftBetween(
+        Vector2Int boundaryLeftPoint, Vector2Int boundaryRightPoint, float pointModifier, int offset)
     {
-        int minX = bottomLeft.x + offset;
-        int maxX = topRight.x - offset;
-        int minY = bottomLeft.y + offset;
-        int maxY = topRight.y - offset;
-
-        int x = Random.Range(minX, (int)(minX + (maxX - minX) * modifier));
-        int y = Random.Range(minY, (int)(minY + (maxY - minY) * modifier));
-        return new Vector2Int(x, y);
+        int minX = boundaryLeftPoint.x + offset;
+        int maxX = boundaryRightPoint.x - offset;
+        int minY = boundaryLeftPoint.y + offset;
+        int maxY = boundaryRightPoint.y - offset;
+        return new Vector2Int(
+            Random.Range(minX, (int)(minX + (maxX - minX) * pointModifier)),
+            Random.Range(minY, (int)(minY + (minY - minY) * pointModifier)));
     }
 
-    public static Vector2Int generateTopRight(Vector2Int bottomLeft, Vector2Int topRight, float modifier, int offset)
+    public static Vector2Int generateTopRightBetween(
+        Vector2Int boundaryLeftPoint, Vector2Int boundaryRightPoint, float pointModifier, int offset)
     {
-        int minX = bottomLeft.x + offset;
-        int maxX = topRight.x - offset;
-        int minY = bottomLeft.y + offset;
-        int maxY = topRight.y - offset;
-
-        int x = Random.Range((int)(maxX - (maxX - minX) * modifier), maxX);
-        int y = Random.Range((int)(maxY - (maxY - minY) * modifier), maxY);
-        return new Vector2Int(x, y);
+        int minX = boundaryLeftPoint.x + offset;
+        int maxX = boundaryRightPoint.x - offset;
+        int minY = boundaryLeftPoint.y + offset;
+        int maxY = boundaryRightPoint.y - offset;
+        return new Vector2Int(
+            Random.Range((int)(minX+(maxX-minX)*pointModifier),maxX),
+            Random.Range((int)(minY+(maxY-minY)*pointModifier),maxY)
+            );
     }
 
-    public static Vector2Int calculateMiddlePoint(Vector2Int v1, Vector2Int v2)
+    public static Vector2Int calculateMiddle(Vector2Int v1, Vector2Int v2)
     {
-        Vector2Int sum = v1 + v2;
-        return new Vector2Int((int)sum.x / 2, (int)sum.y / 2);
+        Vector2 sum = v1 + v2;
+        Vector2 tempVector = sum / 2;
+        return new Vector2Int((int)tempVector.x, (int)tempVector.y);
     }
 }
 
 public enum RelativePosition
 {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+    Up,
+    Down,
+    Right,
+    Left
 }
