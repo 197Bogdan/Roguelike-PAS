@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 
 internal class Helper
 {
-    public static List<Node> extractLeaves(Node rootRoom)
+    public static List<Node> extractLeaves(Node root)
     {
         Queue<Node> nodes = new Queue<Node>();
         List<Node> leaves = new List<Node>();
-        if (rootRoom.children.Count == 0)
-            return new List<Node> { rootRoom };
-        foreach (Node child in rootRoom.children)
+        if (root.children.Count == 0)
+            return new List<Node> { root };
+        foreach (Node child in root.children)
         {
             nodes.Enqueue(child);
         }
@@ -56,4 +56,18 @@ internal class Helper
         int y = Random.Range((int)(maxY - (maxY - minY) * modifier), maxY);
         return new Vector2Int(x, y);
     }
+
+    public static Vector2Int calculateMiddlePoint(Vector2Int v1, Vector2Int v2)
+    {
+        Vector2Int sum = v1 + v2;
+        return new Vector2Int((int)sum.x / 2, (int)sum.y / 2);
+    }
+}
+
+public enum RelativePosition
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 }

@@ -20,4 +20,4 @@ public abstract class Node : MonoBehaviour
             parentNode.children.Add(this);
         }
     }
-}
+    }

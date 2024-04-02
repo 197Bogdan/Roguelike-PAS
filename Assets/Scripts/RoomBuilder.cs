@@ -15,13 +15,13 @@ public class RoomBuilder
         
     }
 
-    public List<RoomNode> buildRooms(List<Node> leaves, float modifier, int offset)
+    public List<RoomNode> buildRooms(List<Node> leaves, float leftModifier, float rightModifier, int offset)
     {
         List<RoomNode> rooms = new List<RoomNode>();
         foreach(Node leaf in leaves)
         {
-            Vector2Int newBottomLeftPoint = Helper.generateBottomLeft(leaf.bottomLeft, leaf.topRight, modifier, offset);
-            Vector2Int newTopRightPoint = Helper.generateTopRight(leaf.bottomLeft, leaf.topRight, modifier, offset);
+            Vector2Int newBottomLeftPoint = Helper.generateBottomLeft(leaf.bottomLeft, leaf.topRight, leftModifier, offset);
+            Vector2Int newTopRightPoint = Helper.generateTopRight(leaf.bottomLeft, leaf.topRight, rightModifier, offset);
             leaf.bottomLeft = newBottomLeftPoint;
             leaf.topRight = newTopRightPoint;
             leaf.bottomRight = new Vector2Int(newTopRightPoint.x, newBottomLeftPoint.y);

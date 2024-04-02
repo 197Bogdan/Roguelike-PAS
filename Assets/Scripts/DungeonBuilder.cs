@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DungeonBuilder : MonoBehaviour
@@ -7,7 +8,11 @@ public class DungeonBuilder : MonoBehaviour
     public int dgWidth, dgLength, minRoomWidth, minRoomLength;
     public int maxIt, corridorWidth;
     public Material material;
-    public float cornerModifier = 0.1f;
+    [Range(0.0f, 0.3f)]
+    public float leftModifier = 0.1f;
+    [Range(0.0f, 0.3f)]
+    public float rightModifier = 0.1f;
+    [Range(0, 2)]
     public int roomOffset = 1;
 
     public DungeonBuilder(int dgWidth, int dgLength)
@@ -24,21 +29,24 @@ public class DungeonBuilder : MonoBehaviour
     public void buildDungeon()
     {
         DungeonBuilder dungeonBuilder = new DungeonBuilder(dgWidth, dgLength);
-        List<RoomNode> rooms = dungeonBuilder.calculateRooms(maxIt, minRoomWidth, minRoomLength);
-        foreach (RoomNode room in rooms)
+        List<Node> rooms = dungeonBuilder.buildRoomsAndCorridors(maxIt, minRoomWidth, minRoomLength);
+        foreach (Node room in rooms)
         {
             createMesh(room.bottomLeft, room.topRight);
         }
     }
 
-    public List<RoomNode> calculateRooms(int maxIterations, int minRoomWidth, int minRoomLength)
+    public List<Node> buildRoomsAndCorridors(int maxIterations, int minRoomWidth, int minRoomLength)
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dgWidth, dgLength);
         roomNodes = bsp.calculateRooms(maxIterations, minRoomWidth, minRoomLength);
         List<Node> leaves = Helper.extractLeaves(bsp.rootRoom);
         RoomBuilder roomBuilder = new RoomBuilder(maxIterations, minRoomWidth, minRoomLength);
-        List<RoomNode> rooms = roomBuilder.buildRooms(leaves, cornerModifier, roomOffset);
-        return rooms;
+        List<RoomNode> rooms = roomBuilder.buildRooms(leaves, leftModifier, rightModifier, roomOffset);
+
+        CorridorsBuilder corridorsBuilder = new CorridorsBuilder(corridorWidth);
+        var corridors = corridorsBuilder.buildCorridors(roomNodes);
+        return new List<Node>(rooms).Concat(corridors).ToList();
     }
 
     private void createMesh(Vector2 bottomLeft, Vector2 topRight)
