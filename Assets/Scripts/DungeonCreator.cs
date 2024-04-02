@@ -16,10 +16,10 @@ public class DungeonCreator : MonoBehaviour
     [Range(0, 2)]
     public int roomOffset;
     public GameObject wallVertical, wallHorizontal;
-    List<Vector3Int> possibleDoorVerticalPosition;
-    List<Vector3Int> possibleDoorHorizontalPosition;
-    List<Vector3Int> possibleWallHorizontalPosition;
-    List<Vector3Int> possibleWallVerticalPosition;
+    List<Vector3Int> possibleDoorsTopAndBottom;
+    List<Vector3Int> possibleDoorsLeftAndRight;
+    List<Vector3Int> possibleWallsLeftAndRight;
+    List<Vector3Int> possibleWallsTopAndBottom;
 
     void Start()
     {
@@ -28,7 +28,6 @@ public class DungeonCreator : MonoBehaviour
 
     public void createDungeon()
     {
-        destroyAllChildren();
         DugeonBuilder generator = new DugeonBuilder(dungeonWidth, dungeonLength);
         var rooms = generator.buildRoomsAndCorridors(
             maxIterations,
@@ -37,10 +36,10 @@ public class DungeonCreator : MonoBehaviour
             corridorWidth);
         GameObject wallParent = new GameObject("WallParent");
         wallParent.transform.parent = transform;
-        possibleDoorVerticalPosition = new List<Vector3Int>();
-        possibleDoorHorizontalPosition = new List<Vector3Int>();
-        possibleWallHorizontalPosition = new List<Vector3Int>();
-        possibleWallVerticalPosition = new List<Vector3Int>();
+        possibleDoorsTopAndBottom = new List<Vector3Int>();
+        possibleDoorsLeftAndRight = new List<Vector3Int>();
+        possibleWallsLeftAndRight = new List<Vector3Int>();
+        possibleWallsTopAndBottom = new List<Vector3Int>();
         for (int i = 0; i < rooms.Count; i++)
         {
             createMesh(rooms[i].bottomLeft, rooms[i].topRight);
@@ -50,11 +49,11 @@ public class DungeonCreator : MonoBehaviour
 
     private void createWalls(GameObject wallParent)
     {
-        foreach (var wallPosition in possibleWallHorizontalPosition)
+        foreach (var wallPosition in possibleWallsLeftAndRight)
         {
             createWall(wallParent, wallPosition, wallHorizontal);
         }
-        foreach (var wallPosition in possibleWallVerticalPosition)
+        foreach (var wallPosition in possibleWallsTopAndBottom)
         {
             createWall(wallParent, wallPosition, wallVertical);
         }
@@ -62,7 +61,9 @@ public class DungeonCreator : MonoBehaviour
 
     private void createWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)
     {
-        Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
+        GameObject newWall = Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
+        BoxCollider boxCollider = newWall.AddComponent<BoxCollider>();
+        boxCollider.size = newWall.GetComponent<MeshRenderer>().bounds.size;
     }
 
     private void createMesh(Vector2 bottomLeftCorner, Vector2 topRightCorner)
@@ -88,29 +89,31 @@ public class DungeonCreator : MonoBehaviour
 
         floor.transform.position = Vector3.zero;
         floor.transform.localScale = Vector3.one;
+        floor.transform.parent = transform;
         floor.GetComponent<MeshFilter>().mesh = mesh;
         floor.GetComponent<MeshRenderer>().material = material;
-        floor.transform.parent = transform;
+        BoxCollider boxCollider = floor.AddComponent<BoxCollider>(); 
+        boxCollider.size = floor.GetComponent<MeshRenderer>().bounds.size;
 
         for (int row = (int)bottomLeftV.x; row < (int)bottomRightV.x; row++)
         {
             var wallPosition = new Vector3(row, 0, bottomLeftV.z);
-            addWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
+            addWallPositionToList(wallPosition, possibleWallsLeftAndRight, possibleDoorsLeftAndRight);
         }
         for (int row = (int)topLeftV.x; row < (int)topRightCorner.x; row++)
         {
             var wallPosition = new Vector3(row, 0, topRightV.z);
-            addWallPositionToList(wallPosition, possibleWallHorizontalPosition, possibleDoorHorizontalPosition);
+            addWallPositionToList(wallPosition, possibleWallsLeftAndRight, possibleDoorsLeftAndRight);
         }
         for (int col = (int)bottomLeftV.z; col < (int)topLeftV.z; col++)
         {
             var wallPosition = new Vector3(bottomLeftV.x, 0, col);
-            addWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
+            addWallPositionToList(wallPosition, possibleWallsTopAndBottom, possibleDoorsTopAndBottom);
         }
         for (int col = (int)bottomRightV.z; col < (int)topRightV.z; col++)
         {
             var wallPosition = new Vector3(bottomRightV.x, 0, col);
-            addWallPositionToList(wallPosition, possibleWallVerticalPosition, possibleDoorVerticalPosition);
+            addWallPositionToList(wallPosition, possibleWallsTopAndBottom, possibleDoorsTopAndBottom);
         }
     }
 
@@ -124,12 +127,5 @@ public class DungeonCreator : MonoBehaviour
         }
         else
             wallList.Add(point);
-    }
-
-    private void destroyAllChildren()
-    {
-        while(transform.childCount != 0)
-            foreach(Transform item in transform)
-                DestroyImmediate(item.gameObject);
     }
 }
