@@ -1,0 +1,20 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InventoryItemController : MonoBehaviour
+{
+    Item item;
+    public Button RemoveButton;
+
+    public void RemoveItem()
+    {
+        InventoryManager.Instance.RemoveItem(item); 
+
+        Destroy(gameObject);
+    }
+
+    public void AddItem(Item newItem)
+    {
+        item = newItem;
+    }
+}
