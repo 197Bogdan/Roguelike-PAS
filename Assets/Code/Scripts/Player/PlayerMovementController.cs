@@ -25,7 +25,7 @@ public class PlayerMovementController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         inputVector = GetInputVector();
         AnimatePlayer(inputVector);
@@ -39,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
         moveDirection = Camera.main.transform.TransformDirection(moveDirection);
         moveDirection.y = 0;
 
-        characterController.Move(moveDirection.normalized * speed * Time.fixedDeltaTime);
+        characterController.Move(moveDirection.normalized * speed * Time.deltaTime);
     }
 
     private void RotatePlayerTowardsCursor()

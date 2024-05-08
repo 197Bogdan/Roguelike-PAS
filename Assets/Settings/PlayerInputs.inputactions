@@ -1,8 +1,8 @@
 {
-    "name": "Input Settings",
+    "name": "PlayerInputs",
     "maps": [
         {
-            "name": "Movement",
+            "name": "Default",
             "id": "4a22c153-dcf4-46ec-ae95-960874e93100",
             "actions": [
                 {
@@ -10,6 +10,15 @@
                     "type": "Value",
                     "id": "a6a0445a-be72-4938-8e74-30feb1933909",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MeleeAttack",
+                    "type": "Value",
+                    "id": "2f4719ea-7974-4433-b5d0-cb7ed802355b",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -70,6 +79,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "73523ab9-59f6-4da8-b3f6-b88cf32eb1b2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
