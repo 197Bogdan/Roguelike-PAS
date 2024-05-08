@@ -37,6 +37,11 @@ public class PlayerCombatController : MonoBehaviour
         isAttacking = false;
     }
 
+    public bool IsAttacking()
+    {
+        return isAttacking;
+    }
+
 }
 
 

@@ -5,35 +5,58 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private float speed = 0.25f;
+    [SerializeField] private float walkingSpeed = 0.25f;
+    [SerializeField] private float dashingSpeed = 4f;
 
+    private PlayerCombatController playerCombatController;
     private PlayerInput playerInput;
     private CharacterController characterController;
     private Animator animator;
 
-    private Vector2 inputVector;
+    private Vector2 movementInputVector;
     private Vector3 moveDirection;
+    private Vector3 dashDirection;
 
     private InputAction movementInput;
+    private InputAction dashInput;
     private string movementActionName = "Move";
+    private string dashActionName = "Dash";
+
+    private bool isDashing = false;
+
 
     void Start()
     {
+        playerCombatController = GetComponent<PlayerCombatController>();
         playerInput = GetComponent<PlayerInput>();
         movementInput = playerInput.actions.FindAction(movementActionName);
+        dashInput = playerInput.actions.FindAction(dashActionName);
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        dashInput.performed += ctx => StartDashing();
     }
 
     void Update()
     {
-        inputVector = GetInputVector();
-        AnimatePlayer(inputVector);
-        MovePlayer(inputVector);
+        if (playerCombatController.IsAttacking())
+            return;
+
+        if (isDashing)
+        {
+            MovePlayer(dashDirection, dashingSpeed);
+            return;
+        }
+
+        Debug.Log("Normal movement");
+        // Normal movement
+        movementInputVector = GetMovementInputVector();
+        AnimatePlayerWalk(movementInputVector);
+        MovePlayer(movementInputVector, walkingSpeed);
         RotatePlayerTowardsCursor();
     }
 
-    private void MovePlayer(Vector2 inputVector)
+    private void MovePlayer(Vector2 inputVector, float speed)
     {
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y).normalized;
         moveDirection = Camera.main.transform.TransformDirection(moveDirection);
@@ -54,7 +77,7 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private void AnimatePlayer(Vector2 inputVector)
+    private void AnimatePlayerWalk(Vector2 inputVector)
     {
         // Rotate input vector based on camera rotation to move relative to camera, not world (e.g.: W moves player up the screen, not forward in world space)
         // Rotate opposite to player to keep the input's direction independent of player's rotation (e.g.: player is facing to the right, pressing W should move the player up, not forward(right), so play MoveLeft animation to move up)
@@ -66,8 +89,30 @@ public class PlayerMovementController : MonoBehaviour
         animator.SetBool("isMoving", inputVector.magnitude > 0);
     }
 
-    private Vector2 GetInputVector()
+    private Vector2 GetMovementInputVector()
     {
         return movementInput.ReadValue<Vector2>();
+    }
+
+    private void StartDashing()
+    {
+        Debug.Log("Dash input received");
+        if (isDashing || playerCombatController.IsAttacking())
+            return;
+
+        dashDirection = GetMovementInputVector();
+        if (dashDirection.magnitude == 0)
+            return;
+
+        isDashing = true;
+
+        animator.SetTrigger("Dash");
+        Invoke("OnDashAnimationFinished", 0.15f);
+    }
+
+    void OnDashAnimationFinished() 
+    {
+        Debug.Log("Dash animation finished");
+        isDashing = false;
     }
 }
