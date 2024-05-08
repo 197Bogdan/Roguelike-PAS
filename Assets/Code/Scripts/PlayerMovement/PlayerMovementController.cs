@@ -61,8 +61,8 @@ public class PlayerMovementController : MonoBehaviour
         Vector3 rotatedInput = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y - transform.eulerAngles.y, 0) * new Vector3(inputVector.x, 0, inputVector.y);
         rotatedInput.Normalize();
 
-        animator.SetFloat("x", rotatedInput.x);
-        animator.SetFloat("y", rotatedInput.z); 
+        animator.SetFloat("x", Mathf.Lerp(animator.GetFloat("x"), rotatedInput.x, 0.7f));
+        animator.SetFloat("y", Mathf.Lerp(animator.GetFloat("y"), rotatedInput.z, 0.7f)); 
         animator.SetBool("isMoving", inputVector.magnitude > 0);
     }
 
