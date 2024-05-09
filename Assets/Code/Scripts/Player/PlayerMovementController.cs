@@ -31,7 +31,7 @@ public class PlayerMovementController : MonoBehaviour
         animator = GetComponent<Animator>();
         playerCombatController = GetComponent<PlayerCombatController>();
         playerInput = GetComponent<PlayerInput>();
-        
+
         movementInput = playerInput.actions.FindAction(movementActionName);
         dashInput = playerInput.actions.FindAction(dashActionName);
         
@@ -50,7 +50,6 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
 
-        Debug.Log("Normal movement");
         // Normal movement
         movementInputVector = GetMovementInputVector();
         AnimatePlayerWalk(movementInputVector);
@@ -98,7 +97,6 @@ public class PlayerMovementController : MonoBehaviour
 
     private void StartDashing()
     {
-        Debug.Log("Dash input received");
         if (isDashing || playerCombatController.IsAttacking())
             return;
 
@@ -114,7 +112,6 @@ public class PlayerMovementController : MonoBehaviour
 
     void OnDashAnimationFinished() 
     {
-        Debug.Log("Dash animation finished");
         isDashing = false;
     }
 }
