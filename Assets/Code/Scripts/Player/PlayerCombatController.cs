@@ -20,6 +20,9 @@ public class PlayerCombatController : MonoBehaviour
     private string hotbar3ActionName = "Hotbar3";
     private string hotbar4ActionName = "Hotbar4";
 
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 10f;
+
     private bool isAttacking = false;
 
     void Start()
@@ -54,7 +57,30 @@ public class PlayerCombatController : MonoBehaviour
     void UseHotbar(int slot)
     {
         Debug.Log("Using hotbar slot " + slot);
+        Vector3 targetPosition = GetMouseClickPosition();
+        SpawnProjectile(targetPosition);
     }
+
+    Vector3 GetMouseClickPosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.point;
+        }
+        return Vector3.zero;
+    }
+
+    void SpawnProjectile(Vector3 targetPosition)
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(0, 2f, 0), Quaternion.identity);
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        direction.y = 0;
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.velocity = direction.normalized * projectileSpeed;
+    }
+
 
     public bool IsAttacking()
     {
