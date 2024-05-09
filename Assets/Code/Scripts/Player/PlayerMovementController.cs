@@ -27,12 +27,14 @@ public class PlayerMovementController : MonoBehaviour
 
     void Start()
     {
-        playerCombatController = GetComponent<PlayerCombatController>();
-        playerInput = GetComponent<PlayerInput>();
-        movementInput = playerInput.actions.FindAction(movementActionName);
-        dashInput = playerInput.actions.FindAction(dashActionName);
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        playerCombatController = GetComponent<PlayerCombatController>();
+        playerInput = GetComponent<PlayerInput>();
+        
+        movementInput = playerInput.actions.FindAction(movementActionName);
+        dashInput = playerInput.actions.FindAction(dashActionName);
+        
 
         dashInput.performed += ctx => StartDashing();
     }
