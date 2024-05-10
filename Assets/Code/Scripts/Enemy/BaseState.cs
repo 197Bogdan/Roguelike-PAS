@@ -10,6 +10,7 @@ public abstract class BaseState : MonoBehaviour
     private float sightDistance = 10f;
     private float attackDistance = 2f;
     private GameObject player;
+    protected Animator animator;
 
     public bool CanSeePlayer()
     {

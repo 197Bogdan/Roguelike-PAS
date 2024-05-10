@@ -20,8 +20,8 @@ public class PlayerCombatController : MonoBehaviour
     private string hotbar3ActionName = "Hotbar3";
     private string hotbar4ActionName = "Hotbar4";
 
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 10f;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float projectileSpeed = 50f;
 
     private bool isAttacking = false;
 

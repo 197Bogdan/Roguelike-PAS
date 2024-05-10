@@ -11,6 +11,8 @@ public class ChaseState : BaseState
     {
         idleState = GetComponent<IdleState>();
         attackState = GetComponent<AttackState>();
+        animator = GetComponent<Animator>();
+        Debug.Log("Base state start");
     }
 
     public override void RunState()
@@ -18,10 +20,13 @@ public class ChaseState : BaseState
         Debug.Log("Chasing player");
         if (!CanSeePlayer())
         {
+            animator.SetBool("isChasing", false);
             nextState = idleState;
         }
         else if (CanAttackPlayer())
         {
+            animator.SetBool("isAttacking", true);
+           // animator.SetBool("isChasing", false);
             nextState = attackState;
         }
         else
