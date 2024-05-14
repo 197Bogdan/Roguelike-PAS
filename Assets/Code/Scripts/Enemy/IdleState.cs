@@ -11,14 +11,13 @@ public class IdleState : BaseState
     {
         chaseState = GetComponent<ChaseState>();
         animator = GetComponent<Animator>();
-        Debug.Log("Base state start");
     }
     
     public override void RunState()
     {
-        Debug.Log("Idle");
         if (CanSeePlayer())
         {
+            Debug.Log("Found player");
             animator.SetBool("isChasing", true);
             nextState = chaseState;
         }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [SerializeField] private float walkingSpeed = 0.25f;
+    [SerializeField] private float walkingSpeed = 5f;
     [SerializeField] private float dashingSpeed = 4f;
 
     private PlayerCombatController playerCombatController;
@@ -39,7 +39,7 @@ public class PlayerMovementController : MonoBehaviour
         dashInput.performed += ctx => StartDashing();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (playerCombatController.IsAttacking())
             return;
@@ -100,8 +100,8 @@ public class PlayerMovementController : MonoBehaviour
         if (isDashing || playerCombatController.IsAttacking())
             return;
 
-        dashDirection = GetMovementInputVector();
-        if (dashDirection.magnitude == 0)
+        dashDirection = GetMovementInputVector();   
+        if (dashDirection.magnitude == 0)   // prevent dash if no input
             return;
 
         isDashing = true;

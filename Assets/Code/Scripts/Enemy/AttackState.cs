@@ -10,12 +10,10 @@ public class AttackState : BaseState
     {
         chaseState = GetComponent<ChaseState>();
         animator = GetComponent<Animator>();
-        Debug.Log("Base state start");
     }
 
     public override void RunState()
     {
-        Debug.Log("Attacking player");
         if (!CanAttackPlayer())
         {
             animator.SetBool("isAttacking", false);

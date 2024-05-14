@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class BaseState : MonoBehaviour
 {
     public abstract void RunState();
     public abstract BaseState GetNextState();
     protected BaseState nextState;
-    private float sightDistance = 10f;
+    private float sightDistance = 50f;
     private float attackDistance = 2f;
-    private GameObject player;
+    protected GameObject player;
     protected Animator animator;
+    protected NavMeshAgent agent;
 
     public bool CanSeePlayer()
     {
@@ -20,6 +22,7 @@ public abstract class BaseState : MonoBehaviour
         }
 
         RaycastHit hit;
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), player.transform.position + new Vector3(0, 1, 0) - (transform.position + new Vector3(0, 1, 0)), Color.red, 5f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), player.transform.position + new Vector3(0, 1, 0) - (transform.position + new Vector3(0, 1, 0)), out hit, sightDistance)) // add height offset, player base is in floor
         {
             if (hit.collider.CompareTag("Player"))

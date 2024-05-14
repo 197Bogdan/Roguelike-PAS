@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
+    private int damage = 10;
 
     public LayerMask excludedLayer;
 
@@ -17,5 +18,10 @@ public class ProjectileController : MonoBehaviour
             Debug.Log("Hit " + other.gameObject.name);
             Destroy(gameObject);
         }
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
 }
