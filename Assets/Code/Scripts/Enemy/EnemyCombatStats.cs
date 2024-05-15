@@ -37,12 +37,13 @@ public class EnemyCombatStats : MonoBehaviour
     private bool isVulnerable = false;
     private bool isResistant = false;
     private bool isImmune = false;
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerAttack"))
+        Debug.Log("Triggered by " + other.name);
+        if (other.CompareTag("Attack"))
         {
-            health -= other.gameObject.GetComponent<ProjectileController>().GetDamage();
+            Debug.Log("Hit");
         }
     }
 }

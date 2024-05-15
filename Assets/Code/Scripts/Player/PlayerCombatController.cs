@@ -50,7 +50,6 @@ public class PlayerCombatController : MonoBehaviour
 
     void OnMeleeAttackAnimationFinished()   // called at ~60% of the animation
     {
-        Debug.Log("Melee attack animation finished");
         isAttacking = false;
     }
 
@@ -95,6 +94,14 @@ public class PlayerCombatController : MonoBehaviour
         hotbar2Action = playerInput.actions.FindAction(hotbar2ActionName);
         hotbar3Action = playerInput.actions.FindAction(hotbar3ActionName);
         hotbar4Action = playerInput.actions.FindAction(hotbar4ActionName);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Attack"))
+        {
+            //Debug.Log("Player hit by enemy attack");
+        }
     }
 }
 
