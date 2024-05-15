@@ -42,6 +42,7 @@ public class DungeonCreator : MonoBehaviour
         possibleWallsTopAndBottom = new List<Vector3Int>();
         for (int i = 0; i < rooms.Count; i++)
         {
+            Debug.Log("Room " + i + " bottomLeft: " + rooms[i].bottomLeft + " topRight: " + rooms[i].topRight);
             createMesh(rooms[i].bottomLeft, rooms[i].topRight);
         }
         createWalls(wallParent);
