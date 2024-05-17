@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-public class DugeonBuilder
+public class DungeonBuilder
 {
     
     List<RoomNode> nodes = new List<RoomNode>();
     private int dungeonWidth;
     private int dungeonLength;
 
-    public DugeonBuilder(int dungeonWidth, int dungeonLength)
+    public DungeonBuilder(int dungeonWidth, int dungeonLength)
     {
         this.dungeonWidth = dungeonWidth;
         this.dungeonLength = dungeonLength;

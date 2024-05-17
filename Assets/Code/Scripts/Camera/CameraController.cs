@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         lastPlayerPosition = playerTransform.position;
-
     }
 
     // Update is called once per frame
