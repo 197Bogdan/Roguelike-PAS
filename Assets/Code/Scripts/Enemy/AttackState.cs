@@ -9,12 +9,12 @@ public class AttackState : BaseState
     void Start()
     {
         chaseState = GetComponent<ChaseState>();
-        animator = GetComponent<Animator>();
+        InitValues();
     }
 
     public override void RunState()
     {
-        if (!CanAttackPlayer())
+        if (!IsLineOfSight(attackDistance))
         {
             animator.SetBool("isAttacking", false);
             animator.SetBool("isChasing", true);

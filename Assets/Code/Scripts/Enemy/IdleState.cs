@@ -10,14 +10,20 @@ public class IdleState : BaseState
     void Start()
     {
         chaseState = GetComponent<ChaseState>();
-        animator = GetComponent<Animator>();
+        InitValues();
     }
     
     public override void RunState()
     {
-        if (CanSeePlayer())
+
+        if(!IsInDistance(activeDistance))
         {
-            Debug.Log("Found player");
+            nextState = this;
+            return;
+        }
+
+        if (IsLineOfSight(sightDistance) || IsInDistance(hearingDistance))
+        {
             animator.SetBool("isChasing", true);
             nextState = chaseState;
         }

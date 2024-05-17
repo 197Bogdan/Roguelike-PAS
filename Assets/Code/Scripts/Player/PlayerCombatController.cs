@@ -55,7 +55,6 @@ public class PlayerCombatController : MonoBehaviour
 
     void UseHotbar(int slot)
     {
-        Debug.Log("Using hotbar slot " + slot);
         Vector3 targetPosition = GetMouseClickPosition();
         SpawnProjectile(targetPosition);
     }

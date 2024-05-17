@@ -12,27 +12,15 @@ public class ChaseState : BaseState
     {
         idleState = GetComponent<IdleState>();
         attackState = GetComponent<AttackState>();
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
+        InitValues();
     }
 
     public override void RunState()
     {
-        if (!CanSeePlayer())
-        {
-            Debug.Log("Lost player");
-            animator.SetBool("isChasing", false);
-            nextState = idleState;
-            agent.SetDestination(transform.position);
-        }
-        else if (CanAttackPlayer())
+
+        if (IsLineOfSight(attackDistance))
         {
             animator.SetBool("isAttacking", true);
-           // animator.SetBool("isChasing", false);
             nextState = attackState;
             agent.SetDestination(transform.position);
         }

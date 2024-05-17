@@ -16,4 +16,5 @@ public class StateManager : MonoBehaviour
         currentState.RunState();
         currentState = currentState.GetNextState();
     }
+
 }

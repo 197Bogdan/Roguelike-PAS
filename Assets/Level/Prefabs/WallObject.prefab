@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1893902587634605567}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8086252518544038972}
   - component: {fileID: 3528142372765930600}
   - component: {fileID: 4368510053111051819}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

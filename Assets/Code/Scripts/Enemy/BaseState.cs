@@ -7,47 +7,41 @@ public abstract class BaseState : MonoBehaviour
 {
     public abstract void RunState();
     public abstract BaseState GetNextState();
+
+    private Vector3 heightOffset = new Vector3(0, 0.5f, 0);
+    private LayerMask enemySightLayer;
+    private string layerName1 = "Player";
+    private string layerName2 = "Wall";
+
     protected BaseState nextState;
-    private float sightDistance = 50f;
-    private float attackDistance = 2f;
+    protected float activeDistance = 50f;
+    protected float hearingDistance = 15f;
+    protected float sightDistance = 20f;
+    protected float attackDistance = 1f;
     protected GameObject player;
     protected Animator animator;
     protected NavMeshAgent agent;
 
-    public bool CanSeePlayer()
+    public void InitValues()
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        enemySightLayer = LayerMask.GetMask(layerName1, layerName2);
 
-        RaycastHit hit;
-        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), player.transform.position + new Vector3(0, 1, 0) - (transform.position + new Vector3(0, 1, 0)), Color.red, 5f);
-        if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), player.transform.position + new Vector3(0, 1, 0) - (transform.position + new Vector3(0, 1, 0)), out hit, sightDistance)) // add height offset, player base is in floor
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
-    public bool CanAttackPlayer()
+    public bool IsInDistance(float distance)
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
+        return Vector3.Distance(transform.position, player.transform.position) < distance;
+    }
 
+    public bool IsLineOfSight(float range)
+    {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), player.transform.position + new Vector3(0, 1, 0) - (transform.position + new Vector3(0, 1, 0)), out hit, attackDistance))
-        {
+        if (Physics.Raycast(transform.position + heightOffset, player.transform.position - transform.position, out hit, range, enemySightLayer))
             if (hit.collider.CompareTag("Player"))
-            {
                 return true;
-            }
-        }
         return false;
     }
 

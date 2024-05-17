@@ -29,6 +29,7 @@ public class DungeonCreator : MonoBehaviour
     private List<Vector3Int> possibleDoorsLeftAndRight;
     private List<Vector3Int> possibleWallsLeftAndRight;
     private List<Vector3Int> possibleWallsTopAndBottom;
+    private LayerMask wallLayerMask;
 
     void Start()
     {
@@ -36,8 +37,11 @@ public class DungeonCreator : MonoBehaviour
         possibleDoorsLeftAndRight = new List<Vector3Int>();
         possibleWallsLeftAndRight = new List<Vector3Int>();
         possibleWallsTopAndBottom = new List<Vector3Int>();
+        wallLayerMask = LayerMask.NameToLayer("Wall");
+
 
         createDungeonStructure();   // generate tree of rooms and corridors
+        createFloorCollider();
         createFloor();              // create floor for each room/corridor
         getWallPositions();         // get wall positions
         createWalls();              // create walls and doors
@@ -45,8 +49,18 @@ public class DungeonCreator : MonoBehaviour
 
         navMeshPrefab.BuildNavMesh();
 
-        InstantiatePlayer();
         InstantiateEnemies();
+        InstantiatePlayer();
+
+    }
+
+    private void createFloorCollider()
+    {
+        int offset = 10;
+        transform.gameObject.AddComponent<BoxCollider>();
+        transform.gameObject.GetComponent<BoxCollider>().size = new Vector3(dungeonWidth + offset, 0f, dungeonLength + offset);
+        transform.gameObject.GetComponent<BoxCollider>().center = new Vector3(dungeonWidth / 2, 0f, dungeonLength / 2);
+
     }
 
 
@@ -114,10 +128,12 @@ public class DungeonCreator : MonoBehaviour
         foreach (var wallPosition in possibleWallsLeftAndRight)
         {
             GameObject newWall = Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
+            newWall.layer = wallLayerMask;
         }
         foreach (var wallPosition in possibleWallsTopAndBottom)
         {
             GameObject newWall = Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
+            newWall.layer = wallLayerMask;
         }
     }
 
@@ -168,7 +184,7 @@ public class DungeonCreator : MonoBehaviour
 
     private void InstantiateEnemies()
     {
-        foreach (var room in dungeonRooms)
+        foreach (var room in dungeonRooms.GetRange(1, dungeonRooms.Count - 1))
         {
             Vector3 enemyPosition = new Vector3((room.topRight.x + room.bottomLeft.x) / 2, 0, (room.topRight.y + room.bottomLeft.y) / 2);
             Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
