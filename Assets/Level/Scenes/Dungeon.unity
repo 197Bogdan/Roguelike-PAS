@@ -306,15 +306,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6af3b9886914a41b9b95623fb0826b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonWidth: 200
-  dungeonLength: 200
-  roomWidthMin: 25
-  roomLengthMin: 25
-  maxIterations: 40
-  corridorWidth: 5
-  roomBottomModifier: 0.1
-  roomTopModifier: 0.9
-  roomOffset: 1
+  dungeonWidth: 400
+  dungeonLength: 400
+  roomWidthMin: 40
+  roomLengthMin: 40
+  maxIterations: 60
+  corridorWidth: 6
+  roomBottomModifier: 0.3
+  roomTopModifier: 0.7
+  roomOffset: 2
+  tileSize: 4
   floorMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   playerPrefab: {fileID: 59051346652111801, guid: 8caae6b323cb76d4da8f0895c7424ae1,
     type: 3}

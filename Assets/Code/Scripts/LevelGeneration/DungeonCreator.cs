@@ -15,6 +15,7 @@ public class DungeonCreator : MonoBehaviour
     public float roomTopModifier;
     [Range(0, 2)]
     public int roomOffset;
+    public int tileSize;
 
     
     [SerializeField] private Material floorMaterial;
@@ -71,7 +72,12 @@ public class DungeonCreator : MonoBehaviour
             maxIterations,
             roomWidthMin, roomLengthMin,
             roomBottomModifier, roomTopModifier, roomOffset,
-            corridorWidth);
+            corridorWidth, tileSize);
+        // foreach (var room in dungeonRooms)
+        // {
+        //     Debug.Log("Room: " + room.bottomLeft + " " + room.topRight + "" + (room.topRight.x - room.bottomLeft.x) + " " + (room.topRight.y - room.bottomLeft.y));
+        //     if 
+        // }
     }
 
     public void createFloor()
@@ -101,19 +107,19 @@ public class DungeonCreator : MonoBehaviour
             int floorWidth = (int)(room.topRight.x - room.bottomLeft.x);
             int floorLength = (int)(room.topRight.y - room.bottomLeft.y);
 
-            for (int row = (int)bottomLeft.x; row <= (int)bottomLeft.x + floorWidth; row++)
+            for (int row = (int)bottomLeft.x; row <= (int)bottomLeft.x + floorWidth - 1; row++)
             {
                 var bottomWallPosition = new Vector3(row, 0, bottomLeft.y);
                 addWallPositionToList(bottomWallPosition, possibleWallsLeftAndRight, possibleDoorsLeftAndRight);
-                var topWallPosition = new Vector3(row, 0, bottomLeft.y + floorLength);
+                var topWallPosition = new Vector3(row, 0, bottomLeft.y + floorLength - 1);
                 addWallPositionToList(topWallPosition, possibleWallsLeftAndRight, possibleDoorsLeftAndRight);
             }
 
-            for (int col = (int)bottomLeft.y; col <= (int)bottomLeft.y + floorLength; col++)
+            for (int col = (int)bottomLeft.y; col <= (int)bottomLeft.y + floorLength - 1; col++)
             {
                 var leftWallPosition = new Vector3(bottomLeft.x, 0, col);
                 addWallPositionToList(leftWallPosition, possibleWallsTopAndBottom, possibleDoorsTopAndBottom);
-                var rightWallPosition = new Vector3(bottomLeft.x + floorWidth, 0, col);
+                var rightWallPosition = new Vector3(bottomLeft.x + floorWidth - 1, 0, col);
                 addWallPositionToList(rightWallPosition, possibleWallsTopAndBottom, possibleDoorsTopAndBottom);
             }
         }

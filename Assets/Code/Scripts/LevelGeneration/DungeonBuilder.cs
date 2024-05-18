@@ -15,14 +15,14 @@ public class DungeonBuilder
 
 
 
-    public List<Node> buildRoomsAndCorridors(int maxIterations, int roomWidthMin, int roomLengthMin, float roomBottomModifier, float roomTopModifier, int roomOffset, int corridorWidth)
+    public List<Node> buildRoomsAndCorridors(int maxIterations, int roomWidthMin, int roomLengthMin, float roomBottomModifier, float roomTopModifier, int roomOffset, int corridorWidth, int tileSize)
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dungeonWidth, dungeonLength);
         nodes = bsp.getSplitNodes(maxIterations, roomWidthMin, roomLengthMin);
         List<Node> roomSpaces = Helper.getLeaves(bsp.RootNode);
 
         RoomsBuilder roomGenerator = new RoomsBuilder();
-        List<RoomNode> rooms = roomGenerator.buildRooms(roomSpaces, roomBottomModifier, roomTopModifier, roomOffset);
+        List<RoomNode> rooms = roomGenerator.buildRooms(roomSpaces, roomBottomModifier, roomTopModifier, roomOffset, tileSize);
 
         CorridorsBuilder corridorGenerator = new CorridorsBuilder();
         var corridors = corridorGenerator.buildCorridors(nodes, corridorWidth);
