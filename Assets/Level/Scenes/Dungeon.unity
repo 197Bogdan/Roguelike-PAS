@@ -309,8 +309,8 @@ MonoBehaviour:
   dungeonWidth: 400
   dungeonLength: 400
   roomWidthMin: 40
-  roomLengthMin: 40
-  maxIterations: 60
+  roomLengthMin: 60
+  maxIterations: 30
   corridorWidth: 4
   roomBottomModifier: 0.3
   roomTopModifier: 0.7
