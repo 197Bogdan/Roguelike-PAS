@@ -311,7 +311,7 @@ MonoBehaviour:
   roomWidthMin: 40
   roomLengthMin: 40
   maxIterations: 60
-  corridorWidth: 6
+  corridorWidth: 4
   roomBottomModifier: 0.3
   roomTopModifier: 0.7
   roomOffset: 2
@@ -326,6 +326,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 1779361056089140793, guid: 1284ac3f746b9594bab1c0a8142b98cf,
     type: 3}
   navMeshPrefab: {fileID: 1424217131}
+  possibleDoorsTopAndBottom: []
+  possibleDoorsLeftAndRight: []
 --- !u!1 &2107771231
 GameObject:
   m_ObjectHideFlags: 0

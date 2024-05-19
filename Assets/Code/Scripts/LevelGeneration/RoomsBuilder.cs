@@ -38,8 +38,8 @@ public class RoomsBuilder
         );
 
         Vector2Int newTopRight = new Vector2Int(
-            topRight.x - (topRight.x % tileSize) + 1,
-            topRight.y - (topRight.y % tileSize) + 1
+            topRight.x - (topRight.x % tileSize) + 2,
+            topRight.y - (topRight.y % tileSize) + 2
         );
 
         return new Vector2Int[] { newBottomLeft, newTopRight };

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+
 public abstract class Node
 {
-    private List<Node> childrenNodeList;
+    public List<Node> childrenNodeList;
     public List<Node> children { get => childrenNodeList; }
 
     public Vector2Int bottomLeft { get; set; }
