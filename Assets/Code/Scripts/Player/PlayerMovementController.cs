@@ -24,6 +24,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool isDashing = false;
 
+    private LayerMask cameraVisible;
+
 
     void Start()
     {
@@ -34,9 +36,10 @@ public class PlayerMovementController : MonoBehaviour
 
         movementInput = playerInput.actions.FindAction(movementActionName);
         dashInput = playerInput.actions.FindAction(dashActionName);
-        
 
         dashInput.performed += ctx => StartDashing();
+
+        cameraVisible = LayerMask.GetMask("CameraVisible");
     }
 
     void FixedUpdate()
@@ -71,7 +74,7 @@ public class PlayerMovementController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, cameraVisible))
         {
             transform.LookAt(hit.point);
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
