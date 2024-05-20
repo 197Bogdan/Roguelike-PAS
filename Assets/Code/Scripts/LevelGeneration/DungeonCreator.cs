@@ -19,6 +19,9 @@ public class DungeonCreator : MonoBehaviour
     public int floorTileSize = 2;
     public int wallLength = 4;
 
+    public Quaternion cameraRotation = Quaternion.Euler(30, 45, 0);
+    public Vector3 cameraPositionOffset = new Vector3(-15, 20, -15);
+
     
     [SerializeField] private Material floorMaterial;
     [SerializeField] private GameObject playerPrefab;
@@ -106,10 +109,9 @@ public class DungeonCreator : MonoBehaviour
             else
             {
                 RoomNode roomNode = (RoomNode)room;
-                Debug.Log("Room: " + roomNode.bottomLeft + " " + roomNode.topRight + " " + " Width: " + roomNode.Width + " Length: " + roomNode.Length);
                 for(int row = roomNode.bottomLeft.x; row < roomNode.topRight.x; row = row + floorTileSize)
                 {
-                    for(int col = roomNode.bottomLeft.y + 1; col < roomNode.topRight.y - 1; col = col + floorTileSize)
+                    for(int col = roomNode.bottomLeft.y; col < roomNode.topRight.y; col = col + floorTileSize)
                     {
                         Vector3 floorPosition = new Vector3(row, 0, col) + floorCenterOffset;
                         GameObject floor = Instantiate(floorPrefab, floorPosition, Quaternion.identity);
@@ -189,9 +191,6 @@ public class DungeonCreator : MonoBehaviour
                 Quaternion rightWallRotation = Quaternion.Euler(0, 90, 0);
                 Quaternion topWallRotation = Quaternion.Euler(0, 180, 0);
                 Quaternion leftWallRotation = Quaternion.Euler(0, 270, 0);
-
-                Debug.Log("Room: " + roomNode.bottomLeft + " " + roomNode.topRight + " " + roomNode.bottomDoor + " " + roomNode.topDoor + " " + roomNode.leftDoor + " " + roomNode.rightDoor);
-
   
                 createWallsAndDoor(bottomLeft + Vector3Int.right, bottomRight + Vector3Int.left, roomNode.bottomDoor, Vector3Int.right, bottomWallRotation);
                 createWallsAndDoor(topLeft + Vector3Int.right, topRight + Vector3Int.left, roomNode.topDoor, Vector3Int.right, topWallRotation);
@@ -355,8 +354,6 @@ public class DungeonCreator : MonoBehaviour
             if(room.rightDoor == maxVec) room.rightDoor = Vector3Int.zero; 
             if(room.topDoor == maxVec) room.topDoor = Vector3Int.zero; 
             if(room.leftDoor == maxVec) room.leftDoor = Vector3Int.zero; 
-
-            Debug.Log("Room: " + room.bottomLeft + " " + room.topRight + " " + room.bottomDoor + " " + room.topDoor + " " + room.leftDoor + " " + room.rightDoor);
         }
 
     }
@@ -365,10 +362,7 @@ public class DungeonCreator : MonoBehaviour
     {
         Vector3 playerStartingPos = new Vector3((dungeonRooms[0].topRight.x + dungeonRooms[0].bottomLeft.x) / 2, 0, (dungeonRooms[0].topRight.y + dungeonRooms[0].bottomLeft.y) / 2);
         Instantiate(playerPrefab, playerStartingPos, Quaternion.identity);
-
-        Quaternion cameraRotation = Quaternion.Euler(30, 45, 0);
-        Vector3 cameraPosition = playerStartingPos + new Vector3(-15, 20, -15);
-        Instantiate(cameraPrefab, cameraPosition, cameraRotation);
+        Instantiate(cameraPrefab, playerStartingPos + cameraPositionOffset, cameraRotation);
     }
 
     private void InstantiateEnemies()
