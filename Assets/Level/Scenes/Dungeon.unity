@@ -306,16 +306,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6af3b9886914a41b9b95623fb0826b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonWidth: 400
-  dungeonLength: 400
+  dungeonWidth: 200
+  dungeonLength: 200
   roomWidthMin: 40
-  roomLengthMin: 60
+  roomLengthMin: 40
   maxIterations: 30
   corridorWidth: 4
   roomBottomModifier: 0.3
   roomTopModifier: 0.7
   roomOffset: 2
   tileSize: 4
+  floorTileSize: 2
+  wallLength: 4
   floorMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   playerPrefab: {fileID: 59051346652111801, guid: 8caae6b323cb76d4da8f0895c7424ae1,
     type: 3}
@@ -323,7 +325,13 @@ MonoBehaviour:
     type: 3}
   enemyPrefab: {fileID: 4138856082249324555, guid: fc6349ae1ab8fcd4288c04b3b4cb6cc8,
     type: 3}
-  wallPrefab: {fileID: 1779361056089140793, guid: 1284ac3f746b9594bab1c0a8142b98cf,
+  wallPrefab: {fileID: 919132149155446097, guid: 77ad7c9c3e57faf4297dd1bef2d12e45,
+    type: 3}
+  doorPrefab: {fileID: 5947525039267582971, guid: c5dbda1424c100d4892ef59b538741f0,
+    type: 3}
+  cornerPrefab: {fileID: 3373217394376378654, guid: 0dfdce9449e241d4793cc51bed81a2ac,
+    type: 3}
+  floorPrefab: {fileID: 1979249846434308571, guid: fc8242e70b008b240bafe593a67013de,
     type: 3}
   navMeshPrefab: {fileID: 1424217131}
   possibleDoorsTopAndBottom: []
