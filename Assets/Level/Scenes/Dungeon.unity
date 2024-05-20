@@ -335,7 +335,12 @@ MonoBehaviour:
     type: 3}
   floorPrefab: {fileID: 1979249846434308571, guid: fc8242e70b008b240bafe593a67013de,
     type: 3}
+  tileDecoratorPrefab: {fileID: 8528885847742310717, guid: 7024bb43f5437c44cbd0a24f205a3bfa,
+    type: 3}
+  wallDecoratorPrefab: {fileID: 502625028633823152, guid: 18fc0f7b41ca76d4d972a4e37ce79a35,
+    type: 3}
   navMeshPrefab: {fileID: 1424217131}
+  decoratorChance: 0.05000000074505806
   possibleDoorsTopAndBottom: []
   possibleDoorsLeftAndRight: []
 --- !u!1 &2107771231

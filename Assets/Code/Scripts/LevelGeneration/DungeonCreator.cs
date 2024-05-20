@@ -31,7 +31,12 @@ public class DungeonCreator : MonoBehaviour
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private GameObject cornerPrefab;
     [SerializeField] private GameObject floorPrefab;
+    [SerializeField] private GameObject tileDecoratorPrefab;
+    [SerializeField] private GameObject wallDecoratorPrefab;
     [SerializeField] private NavMeshSurface navMeshPrefab;
+
+    [SerializeField] private double wallDecoratorChance = 0.1f;
+    [SerializeField] private double tileDecoratorChance = 0.01f;
 
     public List<Node> dungeonRooms;
     public List<Vector3Int> possibleDoorsTopAndBottom;
@@ -40,6 +45,8 @@ public class DungeonCreator : MonoBehaviour
     private List<Vector3Int> possibleWallsTopAndBottom;
     private LayerMask wallLayerMask;
     private LayerMask defaultLayerMask;
+
+    private System.Random random = new System.Random();
 
     void Start()
     {
@@ -109,14 +116,24 @@ public class DungeonCreator : MonoBehaviour
             else
             {
                 RoomNode roomNode = (RoomNode)room;
+                GameObject floorParent = new GameObject("FloorParent " + roomNode.bottomLeft + " " + roomNode.topRight);
+                floorParent.transform.parent = transform;
+                floorParent.transform.localPosition = new Vector3(roomNode.bottomLeft.x, 0, roomNode.bottomLeft.y);
+
                 for(int row = roomNode.bottomLeft.x; row < roomNode.topRight.x; row = row + floorTileSize)
                 {
                     for(int col = roomNode.bottomLeft.y; col < roomNode.topRight.y; col = col + floorTileSize)
                     {
                         Vector3 floorPosition = new Vector3(row, 0, col) + floorCenterOffset;
                         GameObject floor = Instantiate(floorPrefab, floorPosition, Quaternion.identity);
-                        floor.transform.parent = transform;
+                        floor.transform.parent = floorParent.transform;
                         floor.layer = wallLayerMask;
+
+                        if(random.NextDouble() < tileDecoratorChance)
+                        {
+                            Vector3 decoratorPosition = new Vector3(row, 0, col) + floorCenterOffset;
+                            Instantiate(tileDecoratorPrefab, decoratorPosition, Quaternion.identity);
+                        }
                     }
                 }
             }
@@ -188,14 +205,15 @@ public class DungeonCreator : MonoBehaviour
                 Vector3Int bottomRight = new Vector3Int(roomNode.topRight.x, 0, roomNode.bottomLeft.y);
                 Vector3Int topLeft = new Vector3Int(roomNode.bottomLeft.x, 0, roomNode.topRight.y);
                 Quaternion bottomWallRotation = Quaternion.identity;
-                Quaternion rightWallRotation = Quaternion.Euler(0, 90, 0);
+                Quaternion leftWallRotation = Quaternion.Euler(0, 90, 0);
                 Quaternion topWallRotation = Quaternion.Euler(0, 180, 0);
-                Quaternion leftWallRotation = Quaternion.Euler(0, 270, 0);
-  
+                Quaternion rightWallRotation = Quaternion.Euler(0, 270, 0);
+
                 createWallsAndDoor(bottomLeft + Vector3Int.right, bottomRight + Vector3Int.left, roomNode.bottomDoor, Vector3Int.right, bottomWallRotation);
-                createWallsAndDoor(topLeft + Vector3Int.right, topRight + Vector3Int.left, roomNode.topDoor, Vector3Int.right, topWallRotation);
-                createWallsAndDoor(bottomLeft + Vector3Int.forward, topLeft + Vector3Int.back, roomNode.leftDoor, Vector3Int.forward, leftWallRotation);
                 createWallsAndDoor(bottomRight + Vector3Int.forward, topRight + Vector3Int.back, roomNode.rightDoor, Vector3Int.forward, rightWallRotation);
+                createWallsAndDoor(topRight + Vector3Int.left, topLeft + Vector3Int.right, roomNode.topDoor, Vector3Int.left, topWallRotation);
+                createWallsAndDoor(topLeft + Vector3Int.back, bottomLeft + Vector3Int.forward, roomNode.leftDoor, Vector3Int.back, leftWallRotation);
+
                 createCorners(bottomLeft, bottomRight, topLeft, topRight);
             }
             // else if (room is CorridorNode)
@@ -221,7 +239,7 @@ public class DungeonCreator : MonoBehaviour
             int margin = distance % wallLength;       
 
             Vector3Int doorCenterOffset = wallLength / 2 * direction;
-            CreateDoor(doorPosition + doorCenterOffset, direction, rotation);
+            createDoor(doorPosition + doorCenterOffset, direction, rotation);
             createWallLine(startingPoint, doorPosition - margin * direction, direction, rotation);
             createWallLine(doorPosition + (wallLength + margin) * direction, endingPoint, direction, rotation);
            
@@ -238,23 +256,28 @@ public class DungeonCreator : MonoBehaviour
     {
         Vector3Int increment = wallLength * direction;
         Vector3Int wallCenterOffset = (wallLength / 2) * direction;
+        float wallWidth = 1;
+        int wallHeight = 4;
+        Vector3 wallDecoratorOffset = new Vector3(0, wallHeight / 2, 0) + Quaternion.Euler(0, -90, 0) * (Vector3)direction  * wallWidth / 2;
 
         Vector3Int currentPoint = startingPoint;
-        while ((currentPoint + increment).magnitude <= endingPoint.magnitude)
+        while (currentPoint != endingPoint)
         {
             createGameObject(wallPrefab, currentPoint + wallCenterOffset, rotation, wallLayerMask);
+            if(random.NextDouble() < wallDecoratorChance)
+                createGameObject(wallDecoratorPrefab, currentPoint + wallDecoratorOffset, rotation, defaultLayerMask);
             currentPoint += increment;
         }
     }
 
-    private void createGameObject(GameObject prefab, Vector3Int position, Quaternion rotation, LayerMask layer = default, float wallScale = 1)
+    private void createGameObject(GameObject prefab, Vector3 position, Quaternion rotation, LayerMask layer = default, float wallScale = 1)
     {
         GameObject newObj = Instantiate(prefab, position, rotation);
         newObj.layer = layer;
         newObj.transform.localScale = new Vector3(wallScale, 1, 1);
     }
 
-    private void CreateDoor(Vector3Int doorPosition, Vector3Int direction, Quaternion rotation)
+    private void createDoor(Vector3Int doorPosition, Vector3Int direction, Quaternion rotation)
     {
         GameObject door = Instantiate(doorPrefab, doorPosition, rotation);
         door.layer = wallLayerMask;
@@ -314,17 +337,19 @@ public class DungeonCreator : MonoBehaviour
 
             RoomNode room = (RoomNode)node;
             Vector3Int maxVec = new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue);
+            Vector3Int minVec = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+
             room.bottomDoor = maxVec;
             room.rightDoor = maxVec;
-            room.topDoor = maxVec;
-            room.leftDoor = maxVec;
+            room.topDoor = minVec;
+            room.leftDoor = minVec;
             Vector2 topRight = new Vector3(room.topRight.x - 1, room.topRight.y - 1);   // -1 for offset of door points in possibleDoorsTopAndBottom and possibleDoorsLeftAndRight
 
             foreach (var doorPos in possibleDoorsTopAndBottom)
             {
                 if (room.bottomLeft.x == doorPos.x && room.bottomLeft.y < doorPos.z && topRight.y > doorPos.z )    // is part of door on left wall
                 {
-                    if(room.leftDoor.y > doorPos.z)
+                    if(room.leftDoor.y < doorPos.z)
                         room.leftDoor = doorPos;
                 }
                 else if (topRight.x == doorPos.x && room.bottomLeft.y < doorPos.z && topRight.y > doorPos.z)    // is part of door on right wall
@@ -343,7 +368,7 @@ public class DungeonCreator : MonoBehaviour
                 }
                 else if (topRight.y == doorPos.z && room.bottomLeft.x < doorPos.x && topRight.x > doorPos.x)    // is part of door on top wall
                 {
-                    if (room.topDoor.x > doorPos.x)
+                    if (room.topDoor.x < doorPos.x)
                         room.topDoor = doorPos + Vector3Int.forward;
                 }
 
@@ -352,8 +377,8 @@ public class DungeonCreator : MonoBehaviour
 
             if(room.bottomDoor == maxVec) room.bottomDoor = Vector3Int.zero; 
             if(room.rightDoor == maxVec) room.rightDoor = Vector3Int.zero; 
-            if(room.topDoor == maxVec) room.topDoor = Vector3Int.zero; 
-            if(room.leftDoor == maxVec) room.leftDoor = Vector3Int.zero; 
+            if(room.topDoor == minVec) room.topDoor = Vector3Int.zero; else room.topDoor = room.topDoor + Vector3Int.right; // door points are offset by 1
+            if(room.leftDoor == minVec) room.leftDoor = Vector3Int.zero; else room.leftDoor = room.leftDoor + Vector3Int.forward; // door points are offset by 1
         }
 
     }
@@ -376,7 +401,6 @@ public class DungeonCreator : MonoBehaviour
             
         }
     }
-
 }
 
 
