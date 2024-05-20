@@ -5,20 +5,17 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private Transform playerTransform;
-    private Vector3 lastPlayerPosition;
+    [SerializeField] private Vector3 cameraOffset = new Vector3(15, -15, 15);
 
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        lastPlayerPosition = playerTransform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 offset = playerTransform.position - lastPlayerPosition;
-        transform.position += offset;
-        lastPlayerPosition = playerTransform.position;
+        transform.position = playerTransform.position + cameraOffset;
     }
 }

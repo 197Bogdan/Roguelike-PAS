@@ -15,12 +15,10 @@ public class DungeonCreator : MonoBehaviour
     public float roomTopModifier;
     [Range(0, 2)]
     public int roomOffset;
+
     public int tileSize = 4;
     public int floorTileSize = 2;
     public int wallLength = 4;
-
-    public Quaternion cameraRotation = Quaternion.Euler(30, 45, 0);
-    public Vector3 cameraPositionOffset = new Vector3(-15, 20, -15);
 
     
     [SerializeField] private Material floorMaterial;
@@ -44,6 +42,7 @@ public class DungeonCreator : MonoBehaviour
     public List<Vector3Int> possibleDoorsLeftAndRight;
     private List<Vector3Int> possibleWallsLeftAndRight;
     private List<Vector3Int> possibleWallsTopAndBottom;
+    
     private LayerMask wallLayerMask;
     private LayerMask defaultLayerMask;
 
@@ -389,8 +388,11 @@ public class DungeonCreator : MonoBehaviour
     private void InstantiatePlayer()
     {
         Vector3 playerStartingPos = new Vector3((dungeonRooms[0].topRight.x + dungeonRooms[0].bottomLeft.x) / 2, 0, (dungeonRooms[0].topRight.y + dungeonRooms[0].bottomLeft.y) / 2);
-        Instantiate(playerPrefab, playerStartingPos, Quaternion.identity);
-        Instantiate(cameraPrefab, playerStartingPos + cameraPositionOffset, cameraRotation);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        CharacterController characterController = player.GetComponent<CharacterController>();
+        characterController.enabled = false;
+        player.transform.position = playerStartingPos;
+        characterController.enabled = true;
     }
 
     private void InstantiateEnemies()
