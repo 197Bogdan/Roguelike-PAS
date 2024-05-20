@@ -40,10 +40,15 @@ public class EnemyCombatStats : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered by " + other.name);
+        Debug.Log("Hit " + other.gameObject.name + "/ current health: " + health);
         if (other.CompareTag("Attack"))
         {
-            Debug.Log("Hit");
+            health -= other.GetComponent<ProjectileController>().GetDamage();
+            if(health <= 0)
+            {
+                Destroy(gameObject);
+                Debug.Log("Killed enemy!");
+            }
         }
     }
 }
