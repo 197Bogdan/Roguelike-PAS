@@ -27,16 +27,17 @@ public class DungeonCreator : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private GameObject[] wallPrefabs;
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private GameObject cornerPrefab;
-    [SerializeField] private GameObject floorPrefab;
-    [SerializeField] private GameObject tileDecoratorPrefab;
-    [SerializeField] private GameObject wallDecoratorPrefab;
+    [SerializeField] private GameObject[] floorPrefabs;
+    [SerializeField] private GameObject[] tileDecoratorPrefabs;
+    [SerializeField] private GameObject[] wallDecoratorPrefabs;
     [SerializeField] private NavMeshSurface navMeshPrefab;
 
     [SerializeField] private double wallDecoratorChance = 0.1f;
     [SerializeField] private double tileDecoratorChance = 0.01f;
+    [SerializeField] private int defaultPrefabChance = 90;
 
     public List<Node> dungeonRooms;
     public List<Vector3Int> possibleDoorsTopAndBottom;
@@ -125,14 +126,14 @@ public class DungeonCreator : MonoBehaviour
                     for(int col = roomNode.bottomLeft.y; col < roomNode.topRight.y; col = col + floorTileSize)
                     {
                         Vector3 floorPosition = new Vector3(row, 0, col) + floorCenterOffset;
-                        GameObject floor = Instantiate(floorPrefab, floorPosition, Quaternion.identity);
+                        GameObject floor = Instantiate(getRandomPrefab(floorPrefabs), floorPosition, Quaternion.identity);
                         floor.transform.parent = floorParent.transform;
                         floor.layer = wallLayerMask;
 
                         if(random.NextDouble() < tileDecoratorChance)
                         {
                             Vector3 decoratorPosition = new Vector3(row, 0, col) + floorCenterOffset;
-                            Instantiate(tileDecoratorPrefab, decoratorPosition, Quaternion.identity);
+                            Instantiate(getRandomPrefab(tileDecoratorPrefabs), decoratorPosition, Quaternion.identity);
                         }
                     }
                 }
@@ -263,9 +264,9 @@ public class DungeonCreator : MonoBehaviour
         Vector3Int currentPoint = startingPoint;
         while (currentPoint != endingPoint)
         {
-            createGameObject(wallPrefab, currentPoint + wallCenterOffset, rotation, wallLayerMask);
+            createGameObject(getRandomPrefab(wallPrefabs), currentPoint + wallCenterOffset, rotation, wallLayerMask);
             if(random.NextDouble() < wallDecoratorChance)
-                createGameObject(wallDecoratorPrefab, currentPoint + wallDecoratorOffset, rotation, defaultLayerMask);
+                createGameObject(getRandomPrefab(wallDecoratorPrefabs), currentPoint + wallDecoratorOffset, rotation, defaultLayerMask);
             currentPoint += increment;
         }
     }
@@ -289,8 +290,8 @@ public class DungeonCreator : MonoBehaviour
         Vector3Int increment = wallLength * direction;
         float wallScale = (float)margin / wallLength;
 
-        createGameObject(wallPrefab, doorPosition - wallCenterOffset, rotation, wallLayerMask, wallScale);
-        createGameObject(wallPrefab, doorPosition + increment + wallCenterOffset, rotation, wallLayerMask, wallScale);
+        createGameObject(getRandomPrefab(wallPrefabs), doorPosition - wallCenterOffset, rotation, wallLayerMask, wallScale);
+        createGameObject(getRandomPrefab(wallPrefabs), doorPosition + increment + wallCenterOffset, rotation, wallLayerMask, wallScale);
     }
 
     private Mesh createFloorMesh(int floorWidth, int floorLength)
@@ -400,6 +401,14 @@ public class DungeonCreator : MonoBehaviour
             enemy.transform.parent = enemyParent.transform;
             
         }
+    }
+
+    private GameObject getRandomPrefab(GameObject[] prefabs)
+    {
+        if(random.Next(0, 100) < defaultPrefabChance)
+            return prefabs[0];
+        else
+            return prefabs[random.Next(1, prefabs.Length)];
     }
 }
 
