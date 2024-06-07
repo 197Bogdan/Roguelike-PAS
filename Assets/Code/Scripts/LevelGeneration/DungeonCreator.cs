@@ -78,10 +78,10 @@ public class DungeonCreator : MonoBehaviour
         int offset = 10;
         GameObject floorCollider = new GameObject("FloorCollider");
         floorCollider.transform.parent = transform;
-        floorCollider.layer = LayerMask.NameToLayer("CameraVisible");
+        floorCollider.layer = LayerMask.NameToLayer("InvisibleFloor");
         floorCollider.AddComponent<BoxCollider>();
         floorCollider.GetComponent<BoxCollider>().size = new Vector3(dungeonWidth + offset, 0f, dungeonLength + offset);
-        floorCollider.GetComponent<BoxCollider>().center = new Vector3(dungeonWidth / 2, 0f, dungeonLength / 2);
+        floorCollider.GetComponent<BoxCollider>().center = new Vector3(dungeonWidth / 2, 1f, dungeonLength / 2);
     }
 
 

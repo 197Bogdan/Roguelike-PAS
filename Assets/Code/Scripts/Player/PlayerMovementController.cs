@@ -24,7 +24,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private bool isDashing = false;
 
-    private LayerMask cameraVisible;
+    private LayerMask invisibleFloorLayer;
+    private LayerMask playerLayer;
 
 
     void Start()
@@ -39,10 +40,12 @@ public class PlayerMovementController : MonoBehaviour
 
         dashInput.performed += ctx => StartDashing();
 
-        cameraVisible = LayerMask.GetMask("CameraVisible");
+        invisibleFloorLayer = LayerMask.GetMask("InvisibleFloor");
+
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("InvisibleFloor"), true);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (playerCombatController.IsAttacking())
             return;
@@ -74,7 +77,8 @@ public class PlayerMovementController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, cameraVisible))
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 10f);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, invisibleFloorLayer))
         {
             transform.LookAt(hit.point);
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
