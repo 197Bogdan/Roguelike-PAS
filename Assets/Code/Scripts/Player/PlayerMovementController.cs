@@ -77,7 +77,6 @@ public class PlayerMovementController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 10f);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, invisibleFloorLayer))
         {
             transform.LookAt(hit.point);
