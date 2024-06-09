@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerCombatController : MonoBehaviour
 {
     private Animator animator;
+    private CharacterController controller;
+    private PlayerMovementController playerMovementController;
     
     private PlayerInput playerInput;
 
@@ -24,11 +26,14 @@ public class PlayerCombatController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 50f;
 
     private bool isAttacking = false;
+    private bool isCombo = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        controller = GetComponent<CharacterController>();
+        playerMovementController = GetComponent<PlayerMovementController>();
 
         GetInputActionReferences();
 
@@ -41,16 +46,49 @@ public class PlayerCombatController : MonoBehaviour
 
     void MeleeAttack()
     {
-        if (isAttacking) 
+        if (playerMovementController.IsDashing())
             return;
-        
-        isAttacking = true;
-        animator.SetTrigger("MeleeAttack");
+ 
+        if (!isAttacking) 
+            StartCombo();
+        else
+            ContinueCombo();
     }
 
-    void OnMeleeAttackAnimationFinished()   // called at ~60% of the animation
+    private void StartCombo()
     {
-        isAttacking = false;
+        isAttacking = true;
+        animator.SetTrigger("MeleeAttack");
+        // animator.SetBool("isMoving", false);
+        // animator.SetFloat("x", 0);
+        // animator.SetFloat("y", 0);
+    }
+
+    private void ContinueCombo()
+    {
+        isCombo = true;
+        animator.SetBool("isCombo", true);
+    }
+
+    private void OnMeleeAttackAnimationStart()
+    {
+        isCombo = false;
+    }
+
+    private void OnMeleeAttackAnimationFinish()
+    {
+        if(!isCombo)
+        {
+            isAttacking = false;
+            animator.SetBool("isCombo", false);
+        }
+    }
+
+
+    private void OnAnimatorMove()
+    {
+        if(isAttacking)
+            controller.Move(2f * transform.forward * Time.deltaTime);
     }
 
     void UseHotbar(int slot)
@@ -93,14 +131,6 @@ public class PlayerCombatController : MonoBehaviour
         hotbar2Action = playerInput.actions.FindAction(hotbar2ActionName);
         hotbar3Action = playerInput.actions.FindAction(hotbar3ActionName);
         hotbar4Action = playerInput.actions.FindAction(hotbar4ActionName);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Attack"))
-        {
-            //Debug.Log("Player hit by enemy attack");
-        }
     }
 }
 

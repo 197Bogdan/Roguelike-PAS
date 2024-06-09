@@ -467,6 +467,11 @@ PrefabInstance:
       propertyPath: walkingSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 2192123158223025266, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2467402969635594868, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       propertyPath: m_TagString

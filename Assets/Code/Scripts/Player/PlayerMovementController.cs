@@ -120,4 +120,9 @@ public class PlayerMovementController : MonoBehaviour
     {
         isDashing = false;
     }
+
+    public bool IsDashing()
+    {
+        return isDashing;
+    }
 }
