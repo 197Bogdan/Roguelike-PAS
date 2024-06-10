@@ -467,6 +467,22 @@ PrefabInstance:
       propertyPath: walkingSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: projectileSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 3301951390020957002, guid: cdc5f36aa1a6c8041b04b3dee862ecbb,
+        type: 3}
     - target: {fileID: 2192123158223025266, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       propertyPath: m_ApplyRootMotion
