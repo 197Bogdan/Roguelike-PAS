@@ -7,7 +7,7 @@ public class IdleState : BaseState
     private ChaseState chaseState;
     private AttackState attackState;
 
-    void Start()
+    void Awake()
     {
         chaseState = GetComponent<ChaseState>();
         InitValues();
