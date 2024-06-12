@@ -35,8 +35,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         invisibleFloorLayer = LayerMask.GetMask("InvisibleFloor");
-
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("InvisibleFloor"), true);
     }
 
     void Update()
@@ -132,8 +130,6 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = false;
     }
-
-
 
     public void MeleeAttack()
     {
