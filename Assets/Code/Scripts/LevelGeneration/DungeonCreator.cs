@@ -263,7 +263,7 @@ public class DungeonCreator : MonoBehaviour
         Vector3 wallDecoratorOffset = new Vector3(0, wallHeight / 2, 0) + Quaternion.Euler(0, -90, 0) * (Vector3)direction  * wallWidth / 2;
 
         Vector3Int currentPoint = startingPoint;
-        while (currentPoint != endingPoint)
+        while (Vector3.Dot(currentPoint - endingPoint, direction) < 0)
         {
             createGameObject(getRandomPrefab(wallPrefabs), currentPoint + wallCenterOffset, rotation, wallLayerMask);
             if(random.NextDouble() < wallDecoratorChance)
