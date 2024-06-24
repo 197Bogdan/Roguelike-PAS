@@ -38,9 +38,8 @@ public class PlayerInputController : MonoBehaviour
         hotbar3Action = playerInput.actions.FindAction(hotbar3ActionName);
         hotbar4Action = playerInput.actions.FindAction(hotbar4ActionName);
         
-
-        dashInput.performed += ctx => playerController.Dash();
-        meleeAttackAction.performed += ctx => playerController.MeleeAttack();
+        dashInput.performed += ctx => playerController.TriggerDash();
+        meleeAttackAction.performed += ctx => playerController.TriggerMeleeAttack();
         hotbar1Action.performed += ctx => playerController.UseHotbar(1);
         hotbar2Action.performed += ctx => playerController.UseHotbar(2);
         hotbar3Action.performed += ctx => playerController.UseHotbar(3);

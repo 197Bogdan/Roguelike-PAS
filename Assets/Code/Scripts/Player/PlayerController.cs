@@ -24,8 +24,10 @@ public class PlayerController : MonoBehaviour
     private LayerMask invisibleFloorLayer;
 
     public bool isDashing = false;
-    private bool isAttacking = false;
-    private bool isCombo = false;
+    public bool isBufferedDash = false;
+    public bool isAttacking = false;
+    public bool isBufferedAttack = false;
+
     
 
     void Start()
@@ -73,7 +75,6 @@ public class PlayerController : MonoBehaviour
         if(angle > 120)
             speedModifier = 0.7f;
         
-
         characterController.Move(movementDirection.normalized * speed * speedModifier * Time.deltaTime);
     }
 
@@ -113,62 +114,37 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMoving", inputVector.magnitude > 0);
     }
 
-    public void Dash()
+    public void TriggerDash()
     {
-        if (isDashing || isAttacking)
+        if (isDashing)
             return;
 
         dashDirection = playerInput.GetMovementInput(); 
         if (dashDirection.magnitude == 0)   // prevent dash if no input
             return;
 
-        isDashing = true;
-        animator.SetTrigger("Dash");
-    }
-
-    void OnDashAnimationFinished() 
-    {
-        isDashing = false;
-    }
-
-    public void MeleeAttack()
-    {
-        if (isDashing)
+        if(isAttacking)
         {
-            ContinueCombo();
+            isBufferedDash = true;
+            animator.SetBool("isBufferedDash", true);
             return;
         }
- 
-        if (!isAttacking) 
-            StartCombo();
-        else
-            ContinueCombo();
+
+        isDashing = true;
+        animator.SetBool("isDashing", true);
     }
 
-    private void StartCombo()
+    public void TriggerMeleeAttack()
     {
-        isAttacking = true;
-        animator.SetTrigger("MeleeAttack");
-    }
-
-    private void ContinueCombo()
-    {
-        isCombo = true;
-        animator.SetBool("isCombo", true);
-    }
-
-    private void OnMeleeAttackAnimationStart()
-    {
-        isCombo = false;
-    }
-
-    private void OnMeleeAttackAnimationFinish()
-    {
-        if(!isCombo)
+        if(isDashing || isAttacking)
         {
-            isAttacking = false;
-            animator.SetBool("isCombo", false);
+            isBufferedAttack = true;
+            animator.SetBool("isBufferedAttack", true);
+            return;
         }
+
+        isAttacking = true;
+        animator.SetBool("isAttacking", true);
     }
 
     public void UseHotbar(int slot)
