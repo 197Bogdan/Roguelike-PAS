@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotatePlayerTowardsCursor()
     {
-        Vector3 targetPosition = GetMouseClickPosition();
+        Vector3 targetPosition = GetCursorPosition();
         if (targetPosition == Vector3.zero)
             return;
 
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    Vector3 GetMouseClickPosition()
+    Vector3 GetCursorPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
     public void UseHotbar(int slot)
     {
-        Vector3 targetPosition = GetMouseClickPosition();
+        Vector3 targetPosition = GetCursorPosition();
         SpawnProjectile(targetPosition);
     }
 
