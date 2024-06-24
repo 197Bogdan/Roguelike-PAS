@@ -15,6 +15,7 @@ public class Attack : StateMachineBehaviour
             playerController = animator.GetComponent<PlayerController>();
         }
 
+        playerController.RotatePlayerTowardsCursor();
         animator.SetBool("isBufferedAttack", false);
         playerController.isBufferedAttack = false;
         playerController.isAttacking = true;

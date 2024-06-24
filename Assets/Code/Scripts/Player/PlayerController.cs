@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        RotatePlayerTowardsCursor();
+        RotatePlayerTowardsCursorLerp();
 
         if (isDashing)
         {
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         characterController.Move(movementDirection.normalized * speed * speedModifier * Time.deltaTime);
     }
 
-    private void RotatePlayerTowardsCursor()
+    public void RotatePlayerTowardsCursorLerp()
     {
         Vector3 targetPosition = GetCursorPosition();
         if (targetPosition == Vector3.zero)
@@ -89,6 +89,16 @@ public class PlayerController : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    public void RotatePlayerTowardsCursor()
+    {
+        Vector3 targetPosition = GetCursorPosition();
+        if (targetPosition == Vector3.zero)
+            return;
+
+        transform.LookAt(targetPosition);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
     Vector3 GetCursorPosition()
