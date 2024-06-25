@@ -33,11 +33,17 @@ public abstract class BaseState : MonoBehaviour
 
     public bool IsInDistance(float distance)
     {
+        if(player == null)
+            return false;
+        
         return Vector3.Distance(transform.position, player.transform.position) < distance;
     }
 
     public bool IsLineOfSight(float range)
     {
+        if (player == null)
+            return false;
+            
         RaycastHit hit;
         if (Physics.Raycast(transform.position + heightOffset, player.transform.position - transform.position, out hit, range, enemySightLayer))
             if (hit.collider.CompareTag("Player"))

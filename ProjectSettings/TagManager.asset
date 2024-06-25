@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerAttack
+  - MeleeAttack
+  - ProjectileAttack
   - Attack
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Attack
   - Wall
   - InvisibleFloor
-  - 
+  - Enemy
   - 
   - 
   - 

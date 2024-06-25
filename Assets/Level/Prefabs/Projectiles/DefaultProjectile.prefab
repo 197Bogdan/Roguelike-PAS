@@ -18,9 +18,9 @@ GameObject:
   - component: {fileID: 7522584809927375853}
   - component: {fileID: 8740546835018785470}
   - component: {fileID: 4755454994695216546}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DefaultProjectile
-  m_TagString: Attack
+  m_TagString: ProjectileAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,9 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd1065639aebde419c8380e6f47020a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  excludedLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!198 &3656042739378149029
 ParticleSystem:
   m_ObjectHideFlags: 0

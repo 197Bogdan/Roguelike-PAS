@@ -16,6 +16,8 @@ public class Attack : StateMachineBehaviour
         }
 
         playerController.RotatePlayerTowardsCursor();
+        playerController.meleeController.StartAttack();
+
         animator.SetBool("isBufferedAttack", false);
         playerController.isBufferedAttack = false;
         playerController.isAttacking = true;
@@ -28,6 +30,9 @@ public class Attack : StateMachineBehaviour
         {
             playerController = animator.GetComponent<PlayerController>();
         }
+
+        playerController.meleeController.EndAttack();
+        
 
         if(!playerController.isBufferedAttack)
         {
