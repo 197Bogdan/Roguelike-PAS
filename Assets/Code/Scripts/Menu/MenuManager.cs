@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
@@ -8,20 +9,29 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
 
-    List<Resolution> filteredResolutions;
-    Resolution[] resolutions;
-    public TMPro.TMP_Dropdown resolutionDropdown;
-    int defaultResolutionIndex;
-    double defaultRefreshRate;
+    UserSettings userSettings;
 
+    public TMPro.TMP_Dropdown resolutionDropdown;
+    public Slider volumeSlider;
+    public Toggle vsyncToggle;
+
+    List<Resolution> filteredResolutions;
+    int defaultResolutionIndex;
 
     void Start()
     {
-        defaultRefreshRate = Screen.currentResolution.refreshRateRatio.value;
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+        CreateResolutionDropdown();
+        userSettings = new UserSettings();
+        LoadSettings();     // load settings if they exist
+        SetSettings();      
+    }
 
+    public void CreateResolutionDropdown()
+    {
+        double defaultRefreshRate = Screen.currentResolution.refreshRateRatio.value;
+        Resolution[] resolutions = Screen.resolutions;
         filteredResolutions = new List<Resolution>();
+
         foreach(Resolution resolution in resolutions)
         {
             if(resolution.refreshRateRatio.value == defaultRefreshRate)
@@ -38,11 +48,8 @@ public class MenuManager : MonoBehaviour
                 defaultResolutionIndex = i;
         }
 
+        resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = defaultResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-
-        SetVSync(false);
     }
 
     public void StartGame()
@@ -58,21 +65,53 @@ public class MenuManager : MonoBehaviour
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
+        userSettings.volume = volume;
+        Debug.Log("Volume: " + volume);
     }
 
     public void SetResolution(int resolutionIndex)
     {
+        if(resolutionIndex == -1)
+            resolutionIndex = defaultResolutionIndex;
+
         Resolution resolution = filteredResolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        Debug.Log("Resolution: " + resolution.width + " x " + resolution.height);
+        userSettings.resolutionIndex = resolutionIndex;
     }
 
-    public void SetVSync(bool isOn)
+    public void SetVSync(bool isVsync)
     {
-        if(isOn)
+        if(isVsync)
             QualitySettings.vSyncCount = 1;
         else
             QualitySettings.vSyncCount = 0;
-        Debug.Log("VSync: " + isOn);
+        userSettings.isVsync = isVsync;
+    }
+
+    public void SaveSettings()
+    {
+        string json = JsonUtility.ToJson(userSettings);
+        File.WriteAllText(Application.persistentDataPath + "/settings.json", json);
+    }
+
+    public void LoadSettings()
+    {
+        string path = Application.persistentDataPath + "/settings.json";
+        if(File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            userSettings = JsonUtility.FromJson<UserSettings>(json);
+        }
+    }
+
+    public void SetSettings()
+    {
+        volumeSlider.value = userSettings.volume;
+        SetVolume(userSettings.volume);
+        vsyncToggle.isOn = userSettings.isVsync;
+        SetVSync(userSettings.isVsync);
+
+        resolutionDropdown.value = defaultResolutionIndex;  // indirectly calls SetResolution
+        resolutionDropdown.RefreshShownValue();
     }
 }
