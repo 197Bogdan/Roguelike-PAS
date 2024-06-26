@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] private int health = 100;
+    [SerializeField] protected int health = 100;
+    [SerializeField] protected int mana = 100;
+    [SerializeField] protected int exp = 0;
     private int damage = 10;
     // private float attackSpeed = 1.0f;
     // private float attackRange = 2.0f;
@@ -14,7 +16,7 @@ public class CharacterStats : MonoBehaviour
     // private float attackCooldownTime = 1.0f;
     // private bool isAttacking = false;
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;
         Debug.Log("Took " + damage + " damage! Current health: " + health);
@@ -32,8 +34,6 @@ public class CharacterStats : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-
         string tag = other.gameObject.tag;
         switch(tag)
         {
