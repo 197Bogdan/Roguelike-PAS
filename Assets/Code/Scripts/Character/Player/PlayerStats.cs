@@ -21,6 +21,8 @@ public class PlayerStats: CharacterStats
         manaBar.value = mana;
         expBar.maxValue = 100;
         expBar.value = currentExp;
+
+        StartCoroutine(RepeatingManaLoss());
     }
 
     protected override void TakeDamage(CharacterStats attackerStats, int damage)
@@ -29,6 +31,26 @@ public class PlayerStats: CharacterStats
         healthBar.value = health;
         if (health <= 0)
             Debug.Log("Player died!");
+    }
+
+    private void UseMana(int amount)
+    {
+        mana -= amount;
+        manaBar.value = mana;
+    }
+
+    private IEnumerator RepeatingManaLoss()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5.0f);
+            UseMana(1);
+            if(mana <= 0)
+            {
+                TakeDamage(this, mana * -1);
+                mana = 0;
+            }
+        }
     }
 
     protected override void Die()
