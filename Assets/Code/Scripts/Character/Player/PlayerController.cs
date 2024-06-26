@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private LayerMask invisibleFloorLayer;
 
     public bool isDashing = false;
+    public float nextDashTime = 0f;
+    public float dashCooldown = 1f;
     public bool isBufferedDash = false;
     public bool isAttacking = false;
     public bool isBufferedAttack = false;
@@ -144,8 +146,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        isDashing = true;
+        if(Time.time < nextDashTime)
+            return;
+
         animator.SetBool("isDashing", true);
+
     }
 
     public void TriggerMeleeAttack()
@@ -157,7 +162,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        isAttacking = true;
         animator.SetBool("isAttacking", true);
     }
 

@@ -16,6 +16,14 @@ public class Dash : StateMachineBehaviour
 
         playerController.isBufferedDash = false;
         animator.SetBool("isBufferedDash", false);
+
+        if(Time.time < playerController.nextDashTime)
+        {
+            animator.SetTrigger("cancelDash");
+            return;
+        }
+            
+
         playerController.isDashing = true;
     }
 
@@ -29,5 +37,7 @@ public class Dash : StateMachineBehaviour
 
         playerController.isDashing = false;
         animator.SetBool("isDashing", false);
+
+        playerController.nextDashTime = Time.time + playerController.dashCooldown;
     }
 }
