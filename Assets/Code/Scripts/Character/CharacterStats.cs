@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
+public abstract class CharacterStats : MonoBehaviour
 {
     [SerializeField] protected int health = 100;
     [SerializeField] protected int mana = 100;
-    [SerializeField] protected int exp = 0;
+    [SerializeField] protected int level = 1;
     private int damage = 10;
     // private float attackSpeed = 1.0f;
     // private float attackRange = 2.0f;
@@ -16,16 +16,8 @@ public class CharacterStats : MonoBehaviour
     // private float attackCooldownTime = 1.0f;
     // private bool isAttacking = false;
 
-    public virtual void TakeDamage(int damage)
-    {
-        health -= damage;
-        Debug.Log("Took " + damage + " damage! Current health: " + health);
-        if(health <= 0)
-        {
-            Destroy(gameObject);
-            Debug.Log("Killed enemy!");
-        }
-    }
+    protected abstract void TakeDamage(CharacterStats source, int damage);
+
 
     public int GetDamage()
     {
@@ -38,7 +30,7 @@ public class CharacterStats : MonoBehaviour
         switch(tag)
         {
             case "ProjectileAttack":
-                TakeDamage(other.GetComponent<ProjectileController>().GetDamage());
+                TakeDamage(other.GetComponent<ProjectileController>().attackerStats, other.GetComponent<ProjectileController>().GetDamage());
                 break;
 
             case "MeleeAttack":
@@ -47,7 +39,7 @@ public class CharacterStats : MonoBehaviour
                 {
                     Debug.Log("Hit by " + other.gameObject.name);
                     meleeController.GetHitEnemies().Add(gameObject);
-                    TakeDamage(meleeController.GetDamage());
+                    TakeDamage(meleeController.attackerStats, meleeController.GetDamage());
                 }
                 else
                 {
@@ -59,4 +51,6 @@ public class CharacterStats : MonoBehaviour
                 break;
         }
     }
+
+    protected abstract void Die();
 }

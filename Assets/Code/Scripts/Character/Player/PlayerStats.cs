@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerStats: CharacterStats
 {
+    private int currentExp = 0;
+    private int expToNextLevel = 100;
+
     public Slider healthBar;
     public Slider manaBar;
     public Slider expBar;
+    public TMPro.TMP_Text levelText;
 
     void Start()
     {
@@ -16,22 +20,40 @@ public class PlayerStats: CharacterStats
         manaBar.maxValue = mana;
         manaBar.value = mana;
         expBar.maxValue = 100;
-        expBar.value = exp;
+        expBar.value = currentExp;
     }
 
-    public override void TakeDamage(int damage)
+    protected override void TakeDamage(CharacterStats attackerStats, int damage)
     {
         health -= damage;
         healthBar.value = health;
         if (health <= 0)
+            Debug.Log("Player died!");
+    }
+
+    protected override void Die()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    public void GainExp(int exp)
+    {
+        currentExp += exp;
+        expBar.value = currentExp;
+        if (currentExp >= expToNextLevel)
         {
-            Die();
+            LevelUp();
         }
     }
 
-    public void Die()
+    public void LevelUp()
     {
-        Debug.Log("Player died!");
+        level++;
+        currentExp = currentExp - expToNextLevel;
+        expToNextLevel = 100 + (level * 50);
+        expBar.maxValue = expToNextLevel;
+        expBar.value = currentExp;
+        levelText.text = "Lvl " + level.ToString();
     }
 
 }

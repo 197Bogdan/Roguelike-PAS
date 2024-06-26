@@ -371,7 +371,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: de4512539185f2d4884882b8087053de,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6761238693044584022}
+      addedObject: {fileID: 6456973056832565969}
     - targetCorrespondingSourceObject: {fileID: -3606650129264159978, guid: de4512539185f2d4884882b8087053de,
         type: 3}
       insertIndex: -1
@@ -502,7 +502,7 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6761238693044584022
+--- !u!114 &6456973056832565969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -511,10 +511,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4138856082249324555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf667c1b7db22e4daaaee9380aa4171, type: 3}
+  m_Script: {fileID: 11500000, guid: df9626eb5e2470949942b823b5319bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
 --- !u!1 &8666008343434065484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3606650129264159978, guid: de4512539185f2d4884882b8087053de,
@@ -557,3 +556,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCollider: {fileID: 314628213878872248}
+  attackerStats: {fileID: 0}

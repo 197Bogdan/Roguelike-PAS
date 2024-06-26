@@ -6,6 +6,7 @@ public class MeleeController : MonoBehaviour
 {
     private int damage = 10;
     public Collider weaponCollider;
+    public CharacterStats attackerStats;
     private List<GameObject> hitEnemies;
 
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class MeleeController : MonoBehaviour
     {
         hitEnemies = new List<GameObject>();
         weaponCollider.enabled = false;
+        attackerStats = GetComponentInParent<CharacterStats>();
     }
 
     public void StartAttack()

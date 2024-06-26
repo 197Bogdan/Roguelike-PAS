@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     private int damage = 10;
+    public CharacterStats attackerStats;
 
     private void OnTriggerEnter(Collider other)
     {

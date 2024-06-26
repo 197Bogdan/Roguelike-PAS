@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 50f;
 
     private PlayerInputController playerInput;
+    private PlayerStats playerStats;
     public MeleeController meleeController;
     private CharacterController characterController;
     private Animator animator;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         meleeController = GetComponentInChildren<MeleeController>();
+        playerStats = GetComponent<PlayerStats>();
 
         invisibleFloorLayer = LayerMask.GetMask("InvisibleFloor");
     }
@@ -174,5 +176,7 @@ public class PlayerController : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(0, 2f, 0) + direction * 2f, Quaternion.identity);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction.normalized * projectileSpeed;
+        ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
+        projectileController.attackerStats = playerStats;
     }
 }
