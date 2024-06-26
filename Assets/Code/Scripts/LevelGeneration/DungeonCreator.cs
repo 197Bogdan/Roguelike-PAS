@@ -398,11 +398,21 @@ public class DungeonCreator : MonoBehaviour
     private void InstantiateEnemies()
     {
         GameObject enemyParent = new GameObject("EnemyParent");
-        foreach (var room in dungeonRooms.GetRange(1, dungeonRooms.Count - 1))
+        foreach (var node in dungeonRooms.GetRange(1, dungeonRooms.Count - 1))
         {
-            Vector3 enemyPosition = new Vector3((room.topRight.x + room.bottomLeft.x) / 2, 0, (room.topRight.y + room.bottomLeft.y) / 2);
-            GameObject enemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
-            enemy.transform.parent = enemyParent.transform;
+            int enemyCount;
+            if(node is RoomNode room)
+            {
+                enemyCount = (int)Mathf.Round(room.Width * room.Length / 700f);
+                enemyCount += (int)Mathf.Round(UnityEngine.Random.Range(-1f, 1.0f));
+                for(int i = 0; i < enemyCount; i++)
+                {
+                    Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(room.bottomLeft.x, room.topRight.x), 0, UnityEngine.Random.Range(room.bottomLeft.y, room.topRight.y));
+                    GameObject enemy = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+                    enemy.transform.parent = enemyParent.transform;
+                }
+            }
+
             
         }
     }
