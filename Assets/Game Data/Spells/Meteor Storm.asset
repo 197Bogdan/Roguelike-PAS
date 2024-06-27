@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb65a55a2887d343ab56b85bb594c94, type: 3}
+  m_Name: Meteor Storm
+  m_EditorClassIdentifier: 
+  spellName: Meteor Storm
+  manaCost: 30
+  spellPrefab: {fileID: 7957833072274404953, guid: 343ef30b4e9c1c24cb53dec834bb61ca,
+    type: 3}
+  damage: 40
+  radius: 40

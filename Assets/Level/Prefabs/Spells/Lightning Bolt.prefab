@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8740546835018785470}
   - component: {fileID: 4755454994695216546}
   m_Layer: 7
-  m_Name: DefaultProjectile
+  m_Name: Lightning Bolt
   m_TagString: ProjectileAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
