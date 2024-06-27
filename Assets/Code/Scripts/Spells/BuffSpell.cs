@@ -16,5 +16,9 @@ public class BuffSpell: Spell
         
         attackerStats.UseMana(manaCost);
         attackerStats.AddBuff(buffType, buffAmount, duration);
+
+        GameObject buffEffect = Instantiate(spellPrefab, origin.position, origin.rotation);
+        buffEffect.transform.SetParent(origin);
+        Destroy(buffEffect, duration);
     }
 }
