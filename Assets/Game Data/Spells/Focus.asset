@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Focus
   manaCost: 25
-  spellPrefab: {fileID: 0}
+  spellPrefab: {fileID: 7155335147208632822, guid: 395334b87d18fa042acbf053d9a2391e,
+    type: 3}
   duration: 10
   buffAmount: 20
   buffType: 0

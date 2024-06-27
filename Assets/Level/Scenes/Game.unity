@@ -1439,7 +1439,7 @@ PrefabInstance:
     - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       propertyPath: hotbarSpells.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
@@ -1450,6 +1450,12 @@ PrefabInstance:
     - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       propertyPath: hotbarSpells.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a79a59a79fc584041b29aa08f0214428,
+        type: 2}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: hotbarSpells.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 71277ceb47b7c944c88fc1d6eb5791ab,
         type: 2}

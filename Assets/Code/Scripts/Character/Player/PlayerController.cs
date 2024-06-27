@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
         if (isAttacking)
         {
             characterController.Move(attackingMoveSpeed * transform.forward * Time.deltaTime);

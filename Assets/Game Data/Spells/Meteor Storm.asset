@@ -16,5 +16,7 @@ MonoBehaviour:
   manaCost: 30
   spellPrefab: {fileID: 7957833072274404953, guid: 343ef30b4e9c1c24cb53dec834bb61ca,
     type: 3}
-  damage: 40
+  damagePerTick: 10
+  ticksPerSecond: 4
   radius: 40
+  duration: 6

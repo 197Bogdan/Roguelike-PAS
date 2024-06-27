@@ -23,7 +23,6 @@ public class Dash : StateMachineBehaviour
             return;
         }
             
-
         playerController.isDashing = true;
     }
 
@@ -35,9 +34,13 @@ public class Dash : StateMachineBehaviour
             playerController = animator.GetComponent<PlayerController>();
         }
 
-        playerController.isDashing = false;
-        animator.SetBool("isDashing", false);
+        if(playerController.isDashing)  // this state is also reached by trying to dash while on cooldown
+        {
+            playerController.isDashing = false;
+            animator.SetBool("isDashing", false);
 
-        playerController.nextDashTime = Time.time + playerController.dashCooldown;
+            playerController.nextDashTime = Time.time + playerController.dashCooldown;
+        }
+
     }
 }
