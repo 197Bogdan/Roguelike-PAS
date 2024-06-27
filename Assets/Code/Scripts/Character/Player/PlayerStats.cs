@@ -15,6 +15,8 @@ public class PlayerStats: CharacterStats
 
     void Start()
     {
+        hitbox = GetComponent<BoxCollider>();
+
         healthBar.maxValue = health;
         healthBar.value = health;
         manaBar.maxValue = mana;
@@ -33,9 +35,15 @@ public class PlayerStats: CharacterStats
             Debug.Log("Player died!");
     }
 
-    private void UseMana(int amount)
+    public override void UseMana(int amount)
     {
         mana -= amount;
+        manaBar.value = mana;
+    }
+
+    public override void GainMana(int amount)
+    {
+        mana += amount;
         manaBar.value = mana;
     }
 

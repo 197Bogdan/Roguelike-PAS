@@ -9,11 +9,21 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject == attackerStats.gameObject)
+        {
+            return;
+        }
+
         Destroy(gameObject);
     }
 
     public int GetDamage()
     {
         return damage;
+    }
+
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
     }
 }

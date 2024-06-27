@@ -1407,6 +1407,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
+      propertyPath: isAttacking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
       propertyPath: walkingSpeed
       value: 15
       objectReference: {fileID: 0}
@@ -1422,10 +1427,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
+      propertyPath: isBufferedAttack
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 3301951390020957002, guid: cdc5f36aa1a6c8041b04b3dee862ecbb,
         type: 3}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: hotbarSpells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1110090940648278446, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      propertyPath: hotbarSpells.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b235f12a3cf47e4ea8a009eface6080,
+        type: 2}
     - target: {fileID: 1265454294681378829, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       propertyPath: m_UiScaleMode
@@ -1870,6 +1891,8 @@ MonoBehaviour:
   health: 100
   mana: 100
   level: 1
+  damage: 10
+  hitbox: {fileID: 0}
   healthBar: {fileID: 765756746}
   manaBar: {fileID: 1117326466}
   expBar: {fileID: 1130208196}

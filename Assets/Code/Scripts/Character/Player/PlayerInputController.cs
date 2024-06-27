@@ -40,10 +40,10 @@ public class PlayerInputController : MonoBehaviour
         
         dashInput.performed += ctx => playerController.TriggerDash();
         meleeAttackAction.performed += ctx => playerController.TriggerMeleeAttack();
-        hotbar1Action.performed += ctx => playerController.UseHotbar(1);
-        hotbar2Action.performed += ctx => playerController.UseHotbar(2);
-        hotbar3Action.performed += ctx => playerController.UseHotbar(3);
-        hotbar4Action.performed += ctx => playerController.UseHotbar(4);
+        hotbar1Action.performed += ctx => playerController.UseHotbar(0);
+        hotbar2Action.performed += ctx => playerController.UseHotbar(1);
+        hotbar3Action.performed += ctx => playerController.UseHotbar(2);
+        hotbar4Action.performed += ctx => playerController.UseHotbar(3);
 
     }
 

@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackingMoveSpeed = 2f;
     [SerializeField] private float rotationSpeed = 25f; 
 
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float projectileSpeed = 50f;
+    [SerializeField] private List<Spell> hotbarSpells;
 
     private PlayerInputController playerInput;
     private PlayerStats playerStats;
@@ -31,8 +30,6 @@ public class PlayerController : MonoBehaviour
     public bool isBufferedDash = false;
     public bool isAttacking = false;
     public bool isBufferedAttack = false;
-
-    
 
     void Start()
     {
@@ -168,19 +165,7 @@ public class PlayerController : MonoBehaviour
     public void UseHotbar(int slot)
     {
         Vector3 targetPosition = GetCursorPosition();
-        SpawnProjectile(targetPosition);
+        hotbarSpells[slot].Cast(transform, targetPosition, playerStats);
     }
 
-
-    void SpawnProjectile(Vector3 targetPosition)
-    {
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0;
-
-        GameObject projectile = Instantiate(projectilePrefab, transform.position + new Vector3(0, 2f, 0) + direction * 2f, Quaternion.identity);
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.velocity = direction.normalized * projectileSpeed;
-        ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
-        projectileController.attackerStats = playerStats;
-    }
 }
