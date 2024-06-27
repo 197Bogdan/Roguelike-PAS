@@ -18,5 +18,5 @@ MonoBehaviour:
     type: 3}
   damagePerTick: 10
   ticksPerSecond: 4
-  radius: 40
+  radius: 4.8
   duration: 6

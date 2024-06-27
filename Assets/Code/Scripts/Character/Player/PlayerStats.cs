@@ -27,7 +27,7 @@ public class PlayerStats: CharacterStats
         StartCoroutine(RepeatingManaLoss());
     }
 
-    protected override void TakeDamage(CharacterStats attackerStats, int damage)
+    public override void TakeDamage(CharacterStats attackerStats, int damage)
     {
         health -= damage;
         healthBar.value = health;

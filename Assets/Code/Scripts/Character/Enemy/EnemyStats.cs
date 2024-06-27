@@ -12,7 +12,7 @@ public class EnemyStats : CharacterStats
         hitbox = GetComponent<Collider>();
     }
 
-    protected override void TakeDamage(CharacterStats attackerStats, int damage)
+    public override void TakeDamage(CharacterStats attackerStats, int damage)
     {
         health -= damage;
         if (health <= 0)

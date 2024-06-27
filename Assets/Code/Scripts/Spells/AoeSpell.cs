@@ -18,7 +18,14 @@ public class AoeSpell: Spell
         attackerStats.UseMana(manaCost);
 
         target.y = 0.1f;
+
         GameObject spellInstance = Instantiate(spellPrefab, target, Quaternion.identity);
-        Destroy(spellInstance, duration);
+        AoeController aoeController = spellInstance.GetComponent<AoeController>();
+
+        aoeController.attackerStats = attackerStats;
+        aoeController.damagePerTick = damagePerTick;
+        aoeController.ticksPerSecond = ticksPerSecond;
+        aoeController.radius = radius;
+        aoeController.duration = duration;
     }
 }

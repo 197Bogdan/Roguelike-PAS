@@ -17,7 +17,7 @@ public abstract class CharacterStats : MonoBehaviour
     // private float attackCooldownTime = 1.0f;
     // private bool isAttacking = false;
 
-    protected abstract void TakeDamage(CharacterStats source, int damage);
+    public abstract void TakeDamage(CharacterStats source, int damage);
 
 
     public int GetDamage()
