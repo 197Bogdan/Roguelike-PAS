@@ -475,6 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f10a1269fe72e49944ea083cd5a610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   weaponCollider: {fileID: 736086947}
   attackerStats: {fileID: 0}
 --- !u!1 &765756745 stripped
@@ -1901,7 +1902,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 100
   mana: 100
+  maxMana: 100
   level: 1
   damage: 10
   hitbox: {fileID: 0}
@@ -1966,12 +1969,11 @@ MonoBehaviour:
   floorTileSize: 2
   wallLength: 4
   floorMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  playerPrefab: {fileID: 59051346652111801, guid: 8caae6b323cb76d4da8f0895c7424ae1,
-    type: 3}
-  cameraPrefab: {fileID: 731408024568163147, guid: bdb2b9bc5e285b14384dd87b92215d68,
-    type: 3}
-  enemyPrefab: {fileID: 4138856082249324555, guid: fc6349ae1ab8fcd4288c04b3b4cb6cc8,
-    type: 3}
+  enemyPrefabs:
+  - {fileID: 370301598806911167, guid: b61662875e19c574dbe11dd6f446e197, type: 3}
+  - {fileID: 285493292742639722, guid: b2ed4e30e93b3624b9a9d7ddbcda8d1f, type: 3}
+  - {fileID: 4138856082249324555, guid: fc6349ae1ab8fcd4288c04b3b4cb6cc8, type: 3}
+  - {fileID: 8945744021204376463, guid: ab6a816e9f5c5ab418e0fc9c3ba3104e, type: 3}
   wallPrefabs:
   - {fileID: 4934184129201528383, guid: d3af9cb8d9a58b947925522fdee66f2f, type: 3}
   - {fileID: 8879298644465359163, guid: 2ab3318dc81888146ab825bf3f599394, type: 3}

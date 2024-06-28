@@ -22,9 +22,7 @@ public class DungeonCreator : MonoBehaviour
 
     
     [SerializeField] private Material floorMaterial;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject cameraPrefab;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject[] wallPrefabs;
     [SerializeField] private GameObject doorPrefab;
     [SerializeField] private GameObject cornerPrefab;
@@ -407,8 +405,9 @@ public class DungeonCreator : MonoBehaviour
                 enemyCount += (int)Mathf.Round(UnityEngine.Random.Range(-1f, 1.0f));
                 for(int i = 0; i < enemyCount; i++)
                 {
+                    int enemyIndex = random.Next(0, enemyPrefabs.Length);
                     Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(room.bottomLeft.x, room.topRight.x), 0, UnityEngine.Random.Range(room.bottomLeft.y, room.topRight.y));
-                    GameObject enemy = Instantiate(enemyPrefab, randomPosition, Quaternion.identity);
+                    GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], randomPosition, Quaternion.identity);
                     enemy.transform.parent = enemyParent.transform;
                 }
             }

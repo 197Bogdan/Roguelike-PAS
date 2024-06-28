@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeController : MonoBehaviour
 {
-    private int damage = 10;
+    public int damage = 10;
     public Collider weaponCollider;
     public CharacterStats attackerStats;
     private List<GameObject> hitEnemies;
