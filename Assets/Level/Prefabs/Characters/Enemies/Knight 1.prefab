@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 34dd6369ef3ac974fab2a34bcb05ed2e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34dd6369ef3ac974fab2a34bcb05ed2e,
         type: 3}
@@ -155,10 +155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929f93cf9c58dee4fb09f966d2955ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDistance: 3.5
   player: {fileID: 0}
   isAttackMoving: 0
   attackMoveSpeed: 0
   meleeController: {fileID: 6755021533590497471}
+  spell: {fileID: 0}
 --- !u!114 &5057702490603487970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94ff5e613cd3dd4193dfbdd75fd5aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDistance: 3.5
   player: {fileID: 0}
 --- !u!114 &3589350065416813251
 MonoBehaviour:
@@ -184,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e2003ff3a3a7549a180849282f493d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDistance: 3.5
   player: {fileID: 0}
 --- !u!114 &5030353429125397763
 MonoBehaviour:

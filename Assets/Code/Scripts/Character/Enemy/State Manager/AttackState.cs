@@ -8,6 +8,7 @@ public class AttackState : BaseState
     public bool isAttackMoving = false;
     public float attackMoveSpeed = 0;
     public MeleeController meleeController;
+    public Spell[] spells;
 
     void Start()
     {
@@ -18,7 +19,10 @@ public class AttackState : BaseState
     public override void RunState()
     {
         if(isAttackMoving == false)
+        {
             transform.LookAt(player.transform); // rotate during windup
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        }
         else
             transform.position = transform.position + transform.forward * attackMoveSpeed * Time.deltaTime; // move during attack
             

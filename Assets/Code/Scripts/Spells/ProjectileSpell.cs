@@ -17,6 +17,7 @@ public class ProjectileSpell: Spell
 
         GameObject spellInstance = Instantiate(spellPrefab, origin.position + new Vector3(0f, 1.5f, 0f), Quaternion.identity);
         spellInstance.transform.LookAt(target);
+        spellInstance.transform.rotation = Quaternion.Euler(0, spellInstance.transform.rotation.eulerAngles.y, 0);
         spellInstance.GetComponent<Rigidbody>().velocity = spellInstance.transform.forward * speed;
 
         ProjectileController projectile = spellInstance.GetComponent<ProjectileController>();

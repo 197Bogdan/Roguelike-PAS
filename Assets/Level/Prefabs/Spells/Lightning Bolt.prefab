@@ -109,7 +109,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4170778246256013317
 Rigidbody:
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd1065639aebde419c8380e6f47020a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackerStats: {fileID: 0}
 --- !u!198 &3656042739378149029
 ParticleSystem:
   m_ObjectHideFlags: 0

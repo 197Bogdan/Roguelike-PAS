@@ -16,8 +16,8 @@ public abstract class BaseState : MonoBehaviour
     protected BaseState nextState;
     protected float activeDistance = 50f;
     protected float hearingDistance = 15f;
-    protected float sightDistance = 20f;
-    protected float attackDistance = 3.5f;
+    protected float sightDistance = 25f;
+    public float attackDistance = 3.5f;
     public GameObject player;
     protected Animator animator;
     protected NavMeshAgent agent;

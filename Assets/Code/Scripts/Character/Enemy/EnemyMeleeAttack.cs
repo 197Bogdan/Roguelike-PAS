@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : StateMachineBehaviour
+public class EnemyMeleeAttack : StateMachineBehaviour
 {
 
     private AttackState attackState;

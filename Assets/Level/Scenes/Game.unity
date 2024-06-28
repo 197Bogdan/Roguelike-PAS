@@ -1974,6 +1974,7 @@ MonoBehaviour:
   - {fileID: 285493292742639722, guid: b2ed4e30e93b3624b9a9d7ddbcda8d1f, type: 3}
   - {fileID: 4138856082249324555, guid: fc6349ae1ab8fcd4288c04b3b4cb6cc8, type: 3}
   - {fileID: 8945744021204376463, guid: ab6a816e9f5c5ab418e0fc9c3ba3104e, type: 3}
+  - {fileID: 8631407132055584463, guid: 7184a02b8b5b21c419218a2ae9566522, type: 3}
   wallPrefabs:
   - {fileID: 4934184129201528383, guid: d3af9cb8d9a58b947925522fdee66f2f, type: 3}
   - {fileID: 8879298644465359163, guid: 2ab3318dc81888146ab825bf3f599394, type: 3}

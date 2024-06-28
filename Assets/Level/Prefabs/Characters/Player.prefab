@@ -1408,10 +1408,11 @@ MonoBehaviour:
   dashingSpeed: 60
   attackingMoveSpeed: 2
   rotationSpeed: 25
-  projectilePrefab: {fileID: 0}
-  projectileSpeed: 50
+  hotbarSpells: []
   meleeController: {fileID: 0}
   isDashing: 0
+  nextDashTime: 0
+  dashCooldown: 1
   isBufferedDash: 0
   isAttacking: 0
   isBufferedAttack: 0
