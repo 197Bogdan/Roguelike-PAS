@@ -44,6 +44,12 @@ public class PlayerStats: CharacterStats
     public override void GainMana(int amount)
     {
         mana += amount;
+        if(mana > maxMana)
+        {
+            TakeDamage(this, maxMana - mana);   // heal excess mana as health
+            mana = maxMana;
+        }
+
         manaBar.value = mana;
     }
 

@@ -22,10 +22,13 @@ public class ChaseState : BaseState
         {
             animator.SetBool("isAttacking", true);
             nextState = attackState;
-            agent.SetDestination(transform.position);
+            // agent.SetDestination(transform.position);
+            agent.isStopped = true;
         }
         else
         {
+            if(agent.isStopped)
+                agent.isStopped = false;
             agent.SetDestination(player.transform.position);
             nextState = this;
         }

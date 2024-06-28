@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        if(transform.position.y != 0)
+            characterController.Move(new Vector3(0, -transform.position.y, 0));
 
         if (isAttacking)
         {
@@ -75,9 +76,9 @@ public class PlayerController : MonoBehaviour
 
         float speedModifier = 1f;
         float angle = Vector3.Angle(transform.forward, movementDirection);
-        if(angle > 60)
+        if(angle > 30)
             speedModifier = 0.85f;
-        if(angle > 120)
+        if(angle > 60)
             speedModifier = 0.7f;
         
         characterController.Move(movementDirection.normalized * speed * speedModifier * Time.deltaTime);

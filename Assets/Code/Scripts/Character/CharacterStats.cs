@@ -5,7 +5,9 @@ using UnityEngine;
 public abstract class CharacterStats : MonoBehaviour
 {
     [SerializeField] public int health = 100;
+    [SerializeField] public int maxHealth = 100;
     [SerializeField] public int mana = 100;
+    [SerializeField] public int maxMana = 100;
     [SerializeField] protected int level = 1;
     public int damage = 10;
     public Collider hitbox;
@@ -46,6 +48,7 @@ public abstract class CharacterStats : MonoBehaviour
 
             case "MeleeAttack":
                 MeleeController meleeController = other.GetComponent<MeleeController>();
+                Debug.Log(meleeController);
                 if(!meleeController.GetHitEnemies().Contains(gameObject))       // Prevents multiple hits from the same attack
                 {
                     meleeController.GetHitEnemies().Add(gameObject);

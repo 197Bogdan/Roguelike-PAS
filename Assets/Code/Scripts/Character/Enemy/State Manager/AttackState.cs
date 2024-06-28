@@ -5,6 +5,9 @@ using UnityEngine;
 public class AttackState : BaseState
 {
     private ChaseState chaseState;
+    public bool isAttackMoving = false;
+    public float attackMoveSpeed = 0;
+    public MeleeController meleeController;
 
     void Start()
     {
@@ -14,16 +17,20 @@ public class AttackState : BaseState
 
     public override void RunState()
     {
-        if (!IsLineOfSight(attackDistance))
-        {
-            animator.SetBool("isAttacking", false);
-            animator.SetBool("isChasing", true);
-            nextState = chaseState;
-        }
+        if(isAttackMoving == false)
+            transform.LookAt(player.transform); // rotate during windup
         else
+            transform.position = transform.position + transform.forward * attackMoveSpeed * Time.deltaTime; // move during attack
+            
+
+
+        if(animator.GetBool("isAttacking") == true)     // prevent leaving state before attack action is finished
         {
             nextState = this;
+            return;
         }
+
+        nextState = chaseState;
     }
 
     public override BaseState GetNextState()
