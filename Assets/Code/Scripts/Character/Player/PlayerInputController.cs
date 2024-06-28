@@ -7,6 +7,7 @@ public class PlayerInputController : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerController playerController;
+    public MenuManager menuManager;
     
     private InputAction movementInput;
     private InputAction dashInput;
@@ -14,7 +15,7 @@ public class PlayerInputController : MonoBehaviour
     private InputAction hotbar1Action;
     private InputAction hotbar2Action;
     private InputAction hotbar3Action;
-    private InputAction hotbar4Action;
+    private InputAction pauseAction;
 
     private string movementActionName = "Move";
     private string dashActionName = "Dash";
@@ -22,7 +23,7 @@ public class PlayerInputController : MonoBehaviour
     private string hotbar1ActionName = "Hotbar1";
     private string hotbar2ActionName = "Hotbar2";
     private string hotbar3ActionName = "Hotbar3";
-    private string hotbar4ActionName = "Hotbar4";
+    private string pauseActionName = "Pause";
 
 
     void Start()
@@ -36,14 +37,14 @@ public class PlayerInputController : MonoBehaviour
         hotbar1Action = playerInput.actions.FindAction(hotbar1ActionName);
         hotbar2Action = playerInput.actions.FindAction(hotbar2ActionName);
         hotbar3Action = playerInput.actions.FindAction(hotbar3ActionName);
-        hotbar4Action = playerInput.actions.FindAction(hotbar4ActionName);
+        pauseAction = playerInput.actions.FindAction(pauseActionName);
         
         dashInput.performed += ctx => playerController.TriggerDash();
         meleeAttackAction.performed += ctx => playerController.TriggerMeleeAttack();
         hotbar1Action.performed += ctx => playerController.UseHotbar(0);
         hotbar2Action.performed += ctx => playerController.UseHotbar(1);
         hotbar3Action.performed += ctx => playerController.UseHotbar(2);
-        hotbar4Action.performed += ctx => playerController.UseHotbar(3);
+        pauseAction.performed += ctx => menuManager.PauseGame();
 
     }
 

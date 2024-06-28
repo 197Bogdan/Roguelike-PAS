@@ -33,7 +33,6 @@ public class EnemySpellAttack : StateMachineBehaviour
 
         int randomSpell = Random.Range(0, attackState.spells.Length);
         attackState.spells[randomSpell].Cast(attackState.transform, attackState.transform.position + attackState.transform.forward, attackState.GetComponent<CharacterStats>());
-        Debug.Log(attackState.transform.position + " " + attackState.transform.rotation + " " + (attackState.transform.position + attackState.transform.forward));
         attackState.GetComponent<CharacterStats>().GainMana(attackState.spells[randomSpell].manaCost); // for now, enemies don't use mana
 
     }

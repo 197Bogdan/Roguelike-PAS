@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Animator animator;
 
+    public MenuManager menuManager;
+
     private Vector2 movementInput;
     private Vector3 movementDirection;
     private Vector3 dashDirection;
@@ -44,6 +46,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(menuManager.IsPaused())
+            return;
+
         if(transform.position.y != 0)
             characterController.Move(new Vector3(0, -transform.position.y, 0));
 
@@ -132,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerDash()
     {
+        if(menuManager.IsPaused())
+            return;
+
         if (isDashing)
             return;
 
@@ -155,6 +163,9 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerMeleeAttack()
     {
+        if(menuManager.IsPaused())
+            return;
+
         if(isDashing || isAttacking)
         {
             isBufferedAttack = true;
@@ -167,6 +178,9 @@ public class PlayerController : MonoBehaviour
 
     public void UseHotbar(int slot)
     {
+        if(menuManager.IsPaused())
+            return;
+
         Vector3 targetPosition = GetCursorPosition();
         hotbarSpells[slot].Cast(transform, targetPosition, playerStats);
     }

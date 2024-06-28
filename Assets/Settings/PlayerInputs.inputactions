@@ -60,9 +60,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hotbar4",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "771a2be2-caaf-4932-bf5c-ed626f50d91f",
+                    "id": "c6a64334-8f0d-47a8-90ff-fe64b5278a95",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -150,7 +150,7 @@
                 {
                     "name": "",
                     "id": "5924931a-8a19-4381-9b23-785780598c11",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/#(E)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -161,7 +161,7 @@
                 {
                     "name": "",
                     "id": "f019d242-4b1e-4f9f-8620-ad704707f372",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/#(R)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -171,23 +171,23 @@
                 },
                 {
                     "name": "",
-                    "id": "a6034c62-4647-4d64-9375-c6f96b80fa7f",
-                    "path": "<Keyboard>/4",
+                    "id": "599dd547-6ab4-46a8-a6f8-70be1db47355",
+                    "path": "<Keyboard>/#(Q)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hotbar4",
+                    "action": "Hotbar1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "599dd547-6ab4-46a8-a6f8-70be1db47355",
-                    "path": "<Keyboard>/1",
+                    "id": "9dce75ac-a7b4-47bf-8c0d-c6d9c5d902c4",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hotbar1",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

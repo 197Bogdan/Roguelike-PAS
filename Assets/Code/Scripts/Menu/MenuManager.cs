@@ -14,6 +14,8 @@ public class MenuManager : MonoBehaviour
     public TMPro.TMP_Dropdown resolutionDropdown;
     public Slider volumeSlider;
     public Toggle vsyncToggle;
+    public GameObject pauseMenu;
+    public bool isPaused = false;
 
     List<Resolution> filteredResolutions;
     int defaultResolutionIndex;
@@ -55,6 +57,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
+        isPaused = false;
     }
 
     public void QuitGame()
@@ -62,11 +65,17 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+        isPaused = false;
+    }
+
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
         userSettings.volume = volume;
-        Debug.Log("Volume: " + volume);
+        SaveSettings();
     }
 
     public void SetResolution(int resolutionIndex)
@@ -77,6 +86,7 @@ public class MenuManager : MonoBehaviour
         Resolution resolution = filteredResolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         userSettings.resolutionIndex = resolutionIndex;
+        SaveSettings();
     }
 
     public void SetVSync(bool isVsync)
@@ -86,6 +96,7 @@ public class MenuManager : MonoBehaviour
         else
             QualitySettings.vSyncCount = 0;
         userSettings.isVsync = isVsync;
+        SaveSettings();
     }
 
     public void SaveSettings()
@@ -113,5 +124,34 @@ public class MenuManager : MonoBehaviour
 
         resolutionDropdown.value = defaultResolutionIndex;  // indirectly calls SetResolution
         resolutionDropdown.RefreshShownValue();
+    }
+
+    public void PauseGame()
+    {
+        if(isPaused)
+            ResumeGame();
+        else
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        isPaused = false;
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
+    public void SaveGame()
+    {
+        // Save game
     }
 }
