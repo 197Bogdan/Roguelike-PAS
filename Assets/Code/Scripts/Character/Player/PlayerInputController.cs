@@ -26,7 +26,7 @@ public class PlayerInputController : MonoBehaviour
     private string pauseActionName = "Pause";
 
 
-    void Start()
+    void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         playerController = GetComponent<PlayerController>();
@@ -38,19 +38,69 @@ public class PlayerInputController : MonoBehaviour
         hotbar2Action = playerInput.actions.FindAction(hotbar2ActionName);
         hotbar3Action = playerInput.actions.FindAction(hotbar3ActionName);
         pauseAction = playerInput.actions.FindAction(pauseActionName);
-        
-        dashInput.performed += ctx => playerController.TriggerDash();
-        meleeAttackAction.performed += ctx => playerController.TriggerMeleeAttack();
-        hotbar1Action.performed += ctx => playerController.UseHotbar(0);
-        hotbar2Action.performed += ctx => playerController.UseHotbar(1);
-        hotbar3Action.performed += ctx => playerController.UseHotbar(2);
-        pauseAction.performed += ctx => menuManager.PauseGame();
+    }
 
+    void OnEnable()
+    {
+        dashInput.Enable();
+        meleeAttackAction.Enable();
+        hotbar1Action.Enable();
+        hotbar2Action.Enable();
+        hotbar3Action.Enable();
+        pauseAction.Enable();
+
+        dashInput.performed += OnDashPerformed;
+        meleeAttackAction.performed += OnMeleeAttackPerformed;
+        hotbar1Action.performed += ctx => OnHotbarPerformed(ctx, 0);
+        hotbar2Action.performed += ctx => OnHotbarPerformed(ctx, 1);
+        hotbar3Action.performed += ctx => OnHotbarPerformed(ctx, 2);
+        pauseAction.performed += OnPausePerformed;
+    }
+
+    void OnDisable()
+    {
+        dashInput.Disable();
+        meleeAttackAction.Disable();
+        hotbar1Action.Disable();
+        hotbar2Action.Disable();
+        hotbar3Action.Disable();
+        pauseAction.Disable();
+
+        dashInput.performed -= OnDashPerformed;
+        meleeAttackAction.performed -= OnMeleeAttackPerformed;
+        hotbar1Action.performed -= ctx => OnHotbarPerformed(ctx, 0);
+        hotbar2Action.performed -= ctx => OnHotbarPerformed(ctx, 1);
+        hotbar3Action.performed -= ctx => OnHotbarPerformed(ctx, 2);
+        pauseAction.performed -= OnPausePerformed;
     }
 
     public Vector2 GetMovementInput()
     {
         return movementInput.ReadValue<Vector2>();
+    }
+
+    public void OnDashPerformed(InputAction.CallbackContext context)
+    {
+        if(playerController != null)
+            playerController.TriggerDash();
+    }
+
+    public void OnMeleeAttackPerformed(InputAction.CallbackContext context)
+    {
+        if(playerController != null)
+            playerController.TriggerMeleeAttack();
+    }
+
+    public void OnHotbarPerformed(InputAction.CallbackContext context, int slot)
+    {
+        if(playerController != null)
+            playerController.UseHotbar(slot);
+    }
+
+    public void OnPausePerformed(InputAction.CallbackContext context)
+    {
+        if(menuManager != null)
+            menuManager.PauseGame();
     }
 
 }

@@ -57,6 +57,7 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Game");
+        Time.timeScale = 1;
         isPaused = false;
     }
 
