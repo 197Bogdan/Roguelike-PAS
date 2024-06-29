@@ -6,6 +6,7 @@ public class EnemyStats : CharacterStats
 {
     private int expValue = 10;
     private int manaOnDeath = 30;
+    public int type;   // enemy prefab index
 
     void Start()
     {
@@ -40,6 +41,36 @@ public class EnemyStats : CharacterStats
     public override void GainMana(int amount)
     {
         mana += amount;
+    }
+
+    public void SetEnemyType(int type)
+    {
+        this.type = type;
+    }
+
+    public int GetEnemyType()
+    {
+        return type;
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
+    }
+
+    public void SetMana(int mana)
+    {
+        this.mana = mana;
+    }
+
+    public void SetExp(int exp)
+    {
+        this.exp = exp;
+    }
+
+    public void SetLevel(int level)
+    {
+        this.level = level;
     }
 
 }

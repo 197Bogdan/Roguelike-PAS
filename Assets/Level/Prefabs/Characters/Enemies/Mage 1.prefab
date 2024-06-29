@@ -281,8 +281,10 @@ MonoBehaviour:
   mana: 100
   maxMana: 100
   level: 1
+  exp: 0
   damage: 10
   hitbox: {fileID: 7174078776302513081}
+  type: 4
 --- !u!136 &7174078776302513081
 CapsuleCollider:
   m_ObjectHideFlags: 0

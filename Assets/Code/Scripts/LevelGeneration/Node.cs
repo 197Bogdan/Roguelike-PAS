@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class Node
 {
     public List<Node> childrenNodeList;
     public List<Node> children { get => childrenNodeList; }
 
-    public Vector2Int bottomLeft { get; set; }
-    public Vector2Int bottomRight { get; set; }
-    public Vector2Int topRight { get; set; }
-    public Vector2Int topLeft { get; set; }
+    public Vector2Int bottomLeft;
+    public Vector2Int bottomRight; 
+    public Vector2Int topRight; 
+    public Vector2Int topLeft; 
     public Node parent;
     public int treeIndex;
 

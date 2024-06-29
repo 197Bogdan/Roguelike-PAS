@@ -160,7 +160,7 @@ MonoBehaviour:
   isAttackMoving: 0
   attackMoveSpeed: 0
   meleeController: {fileID: 6755021533590497471}
-  spell: {fileID: 0}
+  spells: []
 --- !u!114 &5057702490603487970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,8 +206,10 @@ MonoBehaviour:
   mana: 100
   maxMana: 100
   level: 1
+  exp: 0
   damage: 10
   hitbox: {fileID: 0}
+  type: 1
 --- !u!136 &8887937936213251708
 CapsuleCollider:
   m_ObjectHideFlags: 0

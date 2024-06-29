@@ -150,9 +150,4 @@ public class MenuManager : MonoBehaviour
     {
         return isPaused;
     }
-
-    public void SaveGame()
-    {
-        // Save game
-    }
 }

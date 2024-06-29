@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class RoomNode : Node
 {
     public Vector3Int leftDoor;

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerStats: CharacterStats
 {
-    private int currentExp = 0;
     private int expToNextLevel = 100;
 
     public Slider healthBar;
@@ -22,7 +21,7 @@ public class PlayerStats: CharacterStats
         manaBar.maxValue = mana;
         manaBar.value = mana;
         expBar.maxValue = 100;
-        expBar.value = currentExp;
+        expBar.value = exp;
 
         StartCoroutine(RepeatingManaLoss());
     }
@@ -32,7 +31,7 @@ public class PlayerStats: CharacterStats
         health -= damage;
         healthBar.value = health;
         if (health <= 0)
-            Debug.Log("Player died!");
+            Die();
     }
 
     public override void UseMana(int amount)
@@ -53,6 +52,26 @@ public class PlayerStats: CharacterStats
         manaBar.value = mana;
     }
 
+    public void GainHealth(int amount)
+    {
+        health += amount;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
+        healthBar.value = health;
+    }
+
+    private IEnumerator RepeatingHealthRegen()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5.0f);
+            GainHealth(10);
+        }
+    }
+
     private IEnumerator RepeatingManaLoss()
     {
         while (true)
@@ -70,13 +89,15 @@ public class PlayerStats: CharacterStats
     protected override void Die()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        SaveManager saveManager = FindObjectOfType<SaveManager>();
+        saveManager.DeleteSave();
     }
 
     public void GainExp(int exp)
     {
-        currentExp += exp;
-        expBar.value = currentExp;
-        if (currentExp >= expToNextLevel)
+        this.exp += exp;
+        expBar.value = this.exp;
+        if (this.exp >= expToNextLevel)
         {
             LevelUp();
         }
@@ -85,11 +106,37 @@ public class PlayerStats: CharacterStats
     public void LevelUp()
     {
         level++;
-        currentExp = currentExp - expToNextLevel;
+        exp = exp - expToNextLevel;
         expToNextLevel = 100 + (level * 50);
         expBar.maxValue = expToNextLevel;
-        expBar.value = currentExp;
+        expBar.value = exp;
         levelText.text = "Lvl " + level.ToString();
     }
+
+    public void SetLevel(int level)
+    {
+        this.level = level;
+        levelText.text = "Lvl " + level.ToString();
+    }
+
+    public void SetExp(int exp)
+    {
+        this.exp = exp;
+        expBar.value = exp;
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
+        healthBar.value = health;
+    }
+
+    public void SetMana(int mana)
+    {
+        this.mana = mana;
+        manaBar.value = mana;
+    }
+
+
 
 }

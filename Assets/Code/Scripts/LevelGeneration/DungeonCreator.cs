@@ -40,6 +40,13 @@ public class DungeonCreator : MonoBehaviour
     public List<Vector3Int> possibleDoorsLeftAndRight;
     private List<Vector3Int> possibleWallsLeftAndRight;
     private List<Vector3Int> possibleWallsTopAndBottom;
+
+    public GameObject player;
+    public List<GameObject> enemies;
+
+    public SaveManager saveManager;
+    public CharacterSaveData playerSaveData;
+    public List<CharacterSaveData> enemySaveData;
     
     private LayerMask wallLayerMask;
     private LayerMask defaultLayerMask;
@@ -48,6 +55,7 @@ public class DungeonCreator : MonoBehaviour
 
     void Start()
     {
+        dungeonRooms = new List<Node>();
         possibleDoorsTopAndBottom = new List<Vector3Int>();
         possibleDoorsLeftAndRight = new List<Vector3Int>();
         possibleWallsLeftAndRight = new List<Vector3Int>();
@@ -55,19 +63,22 @@ public class DungeonCreator : MonoBehaviour
         wallLayerMask = LayerMask.NameToLayer("Wall");
         defaultLayerMask = LayerMask.NameToLayer("Default");
 
+        if(saveManager.IsSavedGame())
+            saveManager.LoadSave();     // setup dungeon variables from save
+        else
+        {
+            createDungeonStructure();   // generate tree of rooms and corridors
+            getWallPositions();         
+            getDoorPositions();         
+        }
 
-        createDungeonStructure();   // generate tree of rooms and corridors
         createFloorCollider();      // create big collider for the whole dungeon
         createAllFloors();              // create floor for each room/corridor
-        getWallPositions();         
-        getDoorPositions();         
         createAllWalls();              // create walls and doors
 
-
         navMeshPrefab.BuildNavMesh();
-
-        InstantiateEnemies();
-        InstantiatePlayer();
+        InstantiateEnemies(enemySaveData);
+        InstantiatePlayer(playerSaveData);
 
     }
 
@@ -392,37 +403,70 @@ public class DungeonCreator : MonoBehaviour
 
     }
 
-    private void InstantiatePlayer()
+    private void InstantiatePlayer(CharacterSaveData playerData = null)
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         Vector3 playerStartingPos = new Vector3((dungeonRooms[0].topRight.x + dungeonRooms[0].bottomLeft.x) / 2, 0, (dungeonRooms[0].topRight.y + dungeonRooms[0].bottomLeft.y) / 2);
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Quaternion playerStartingRot = Quaternion.identity;
+        if(saveManager.IsSavedGame() && playerData != null)
+        {
+            playerStartingPos = playerData.position;
+            playerStartingRot = playerData.rotation;
+            PlayerStats playerStats = player.GetComponent<PlayerStats>();
+            playerStats.SetHealth(playerData.health);
+            playerStats.SetMana(playerData.mana);
+            playerStats.SetExp(playerData.exp);
+            playerStats.SetLevel(playerData.level);
+        }
+
         CharacterController characterController = player.GetComponent<CharacterController>();
         characterController.enabled = false;
         player.transform.position = playerStartingPos;
+        player.transform.rotation = playerStartingRot;
         characterController.enabled = true;
     }
 
-    private void InstantiateEnemies()
+    private void InstantiateEnemies(List<CharacterSaveData> enemySaveData = null)
     {
         GameObject enemyParent = new GameObject("EnemyParent");
-        foreach (var node in dungeonRooms.GetRange(1, dungeonRooms.Count - 1))
+        if(!saveManager.IsSavedGame())
         {
-            int enemyCount;
-            if(node is RoomNode room)
+            foreach (var node in dungeonRooms.GetRange(1, dungeonRooms.Count - 1))
             {
-                enemyCount = (int)Mathf.Round(room.Width * room.Length / 700f);
-                enemyCount += (int)Mathf.Round(UnityEngine.Random.Range(-1f, 1.0f));
-                for(int i = 0; i < enemyCount; i++)
+                int enemyCount;
+                if(node is RoomNode room)
                 {
-                    int enemyIndex = random.Next(0, enemyPrefabs.Length);
-                    Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(room.bottomLeft.x, room.topRight.x), 0, UnityEngine.Random.Range(room.bottomLeft.y, room.topRight.y));
-                    GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], randomPosition, Quaternion.identity);
-                    enemy.transform.parent = enemyParent.transform;
+                    enemyCount = (int)Mathf.Round(room.Width * room.Length / 700f);
+                    enemyCount += (int)Mathf.Round(UnityEngine.Random.Range(-1f, 1.0f));
+                    for(int i = 0; i < enemyCount; i++)
+                    {
+                        int enemyIndex = random.Next(0, enemyPrefabs.Length);
+                        Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(room.bottomLeft.x, room.topRight.x), 0, UnityEngine.Random.Range(room.bottomLeft.y, room.topRight.y));
+                        GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], randomPosition, Quaternion.identity);
+                        enemies.Add(enemy);
+                        enemy.transform.parent = enemyParent.transform;
+                    }
                 }
+                
             }
-
-            
         }
+        else
+        {
+            foreach (var enemyData in enemySaveData)
+            {
+                GameObject enemy = Instantiate(enemyPrefabs[enemyData.type], enemyData.position, enemyData.rotation);
+                EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+                enemyStats.SetHealth(enemyData.health);
+                enemyStats.SetMana(enemyData.mana);
+                enemyStats.SetExp(enemyData.exp);
+                enemyStats.SetLevel(enemyData.level);
+
+                enemies.Add(enemy);
+                enemy.transform.parent = enemyParent.transform;
+            }
+        
+        }
+
     }
 
     private GameObject getRandomPrefab(GameObject[] prefabs)

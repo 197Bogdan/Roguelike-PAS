@@ -4851,6 +4851,7 @@ GameObject:
   - component: {fileID: 6490440223406705805}
   - component: {fileID: -6831723077948439655}
   - component: {fileID: -5638800379222432393}
+  - component: {fileID: -1203250516858501420}
   m_Layer: 0
   m_Name: Star aura
   m_TagString: ProjectileAttack
@@ -9740,6 +9741,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackerStats: {fileID: 0}
+--- !u!33 &-1203250516858501420
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7053385775836331393}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8554865047300510678
 GameObject:
   m_ObjectHideFlags: 0

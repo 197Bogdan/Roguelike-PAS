@@ -9,6 +9,7 @@ public abstract class CharacterStats : MonoBehaviour
     [SerializeField] public int mana = 100;
     [SerializeField] public int maxMana = 100;
     [SerializeField] protected int level = 1;
+    [SerializeField] protected int exp = 0;
     public int damage = 10;
     public Collider hitbox;
     // private float attackSpeed = 1.0f;
@@ -32,6 +33,21 @@ public abstract class CharacterStats : MonoBehaviour
         return mana;
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public int GetExp()
+    {
+        return exp;
+    }
+
     public abstract void UseMana(int amount);
 
     public abstract void GainMana(int amount);
@@ -48,7 +64,6 @@ public abstract class CharacterStats : MonoBehaviour
 
             case "MeleeAttack":
                 MeleeController meleeController = other.GetComponent<MeleeController>();
-                Debug.Log(meleeController);
                 if(!meleeController.GetHitEnemies().Contains(gameObject))       // Prevents multiple hits from the same attack
                 {
                     meleeController.GetHitEnemies().Add(gameObject);
