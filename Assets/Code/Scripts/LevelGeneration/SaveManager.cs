@@ -10,6 +10,8 @@ public class SaveManager: MonoBehaviour
     public void Save()
     {
         GameData gameData = new GameData();
+
+        gameData.winningCheckpointPosition = dungeonData.winningCheckpoint.transform.position;
         
         gameData.rooms = new List<RoomNode>();
         gameData.corridors = new List<CorridorNode>();
@@ -75,6 +77,7 @@ public class SaveManager: MonoBehaviour
             dungeonData.dungeonRooms.Add(corridor);
         dungeonData.playerSaveData = gameData.player;
         dungeonData.enemySaveData = gameData.enemies;
+        dungeonData.winningCheckpointPosition = gameData.winningCheckpointPosition;
     }
 
 }
@@ -98,4 +101,5 @@ public class GameData
     public List<CorridorNode> corridors;
     public List<CharacterSaveData> enemies;
     public CharacterSaveData player;
+    public Vector3 winningCheckpointPosition;
 }

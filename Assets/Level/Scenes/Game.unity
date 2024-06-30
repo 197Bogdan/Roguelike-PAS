@@ -4804,6 +4804,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1771277728}
+    - targetCorrespondingSourceObject: {fileID: 59051346652111801, guid: 8caae6b323cb76d4da8f0895c7424ae1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1771277736}
     - targetCorrespondingSourceObject: {fileID: 7964100499511044009, guid: 8caae6b323cb76d4da8f0895c7424ae1,
         type: 3}
       insertIndex: -1
@@ -4868,6 +4872,33 @@ MonoBehaviour:
   manaBar: {fileID: 1117326466}
   expBar: {fileID: 1130208196}
   levelText: {fileID: 1751512466}
+--- !u!54 &1771277736
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771277718}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1930850472
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,6 +4986,10 @@ MonoBehaviour:
   - {fileID: 9186674437395653846, guid: fc52ec68f935a2e4c956840c47e979cf, type: 3}
   - {fileID: 502625028633823152, guid: 18fc0f7b41ca76d4d972a4e37ce79a35, type: 3}
   - {fileID: 8792150223863225180, guid: 46732d110e262e54eac547873de807fe, type: 3}
+  winningCheckpointPrefab: {fileID: 4617036660772024948, guid: 0c526132549eebf449a22e2af056dc25,
+    type: 3}
+  startingCheckpointPrefab: {fileID: 5607819269926399345, guid: 9024054a174c0bb46b564ecb1d07af9a,
+    type: 3}
   navMeshPrefab: {fileID: 1424217131}
   wallDecoratorChance: 0.10000000149011612
   tileDecoratorChance: 0.009999999776482582

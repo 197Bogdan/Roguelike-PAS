@@ -150,4 +150,11 @@ public class MenuManager : MonoBehaviour
     {
         return isPaused;
     }
+
+    public void WinGame()
+    {
+        SceneManager.LoadScene("Menu");
+        SaveManager saveManager = FindObjectOfType<SaveManager>();
+        saveManager.DeleteSave();
+    }
 }

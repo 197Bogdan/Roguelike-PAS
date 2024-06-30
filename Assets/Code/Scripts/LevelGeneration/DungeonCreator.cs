@@ -29,6 +29,8 @@ public class DungeonCreator : MonoBehaviour
     [SerializeField] private GameObject[] floorPrefabs;
     [SerializeField] private GameObject[] tileDecoratorPrefabs;
     [SerializeField] private GameObject[] wallDecoratorPrefabs;
+    [SerializeField] private GameObject winningCheckpointPrefab;
+    [SerializeField] private GameObject startingCheckpointPrefab;
     [SerializeField] private NavMeshSurface navMeshPrefab;
 
     [SerializeField] private double wallDecoratorChance = 0.1f;
@@ -43,10 +45,12 @@ public class DungeonCreator : MonoBehaviour
 
     public GameObject player;
     public List<GameObject> enemies;
+    public GameObject winningCheckpoint;
 
     public SaveManager saveManager;
     public CharacterSaveData playerSaveData;
     public List<CharacterSaveData> enemySaveData;
+    public Vector3 winningCheckpointPosition;
     
     private LayerMask wallLayerMask;
     private LayerMask defaultLayerMask;
@@ -79,6 +83,7 @@ public class DungeonCreator : MonoBehaviour
         navMeshPrefab.BuildNavMesh();
         InstantiateEnemies(enemySaveData);
         InstantiatePlayer(playerSaveData);
+        InstantiateWinningCheckpoint();
 
     }
 
@@ -465,6 +470,32 @@ public class DungeonCreator : MonoBehaviour
                 enemy.transform.parent = enemyParent.transform;
             }
         
+        }
+
+    }
+
+    public void InstantiateWinningCheckpoint()
+    {
+        if(!saveManager.IsSavedGame())
+        {
+            Vector3 winningPosition = player.transform.position;
+            Vector3 roomCenter;
+            foreach(var node in dungeonRooms)
+            {
+                if(node is RoomNode room)
+                {
+                    roomCenter = new Vector3((room.topRight.x + room.bottomLeft.x) / 2, 2, (room.topRight.y + room.bottomLeft.y) / 2);
+                    if(Vector3.Distance(player.transform.position, roomCenter) > Vector3.Distance(player.transform.position, winningPosition))
+                        winningPosition = roomCenter;
+                }
+            }
+
+        winningCheckpoint = Instantiate(winningCheckpointPrefab, winningPosition, Quaternion.identity);
+        GameObject startingCheckpoint = Instantiate(startingCheckpointPrefab, player.transform.position + player.transform.forward * -2 + new Vector3(0,2,0), Quaternion.identity);
+        }
+        else
+        {
+            winningCheckpoint = Instantiate(winningCheckpointPrefab, winningCheckpointPosition, Quaternion.identity);
         }
 
     }

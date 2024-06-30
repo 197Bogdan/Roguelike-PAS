@@ -9,7 +9,7 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == attackerStats.gameObject)
+        if (attackerStats.gameObject != null && other.gameObject == attackerStats.gameObject)
         {
             return;
         }
