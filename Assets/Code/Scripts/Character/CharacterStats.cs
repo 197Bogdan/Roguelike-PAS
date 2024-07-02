@@ -12,6 +12,7 @@ public abstract class CharacterStats : MonoBehaviour
     [SerializeField] protected int exp = 0;
     public int damage = 10;
     public Collider hitbox;
+    public GameObject hitEffectPrefab;
     // private float attackSpeed = 1.0f;
     // private float attackRange = 2.0f;
     // private float sightRange = 50.0f;

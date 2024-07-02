@@ -209,6 +209,8 @@ MonoBehaviour:
   exp: 0
   damage: 10
   hitbox: {fileID: 0}
+  hitEffectPrefab: {fileID: 2944396702758532163, guid: 761dbe9ca3fcd5744985f7f07d667e41,
+    type: 3}
   type: 1
 --- !u!136 &8887937936213251708
 CapsuleCollider:
@@ -265,7 +267,7 @@ Animator:
   m_GameObject: {fileID: 285493292742639722}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: da3971eef8263524789e4d368f543090, type: 3}
-  m_Controller: {fileID: 9100000, guid: a60945146aba5b7499b8419e4ee38012, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c09abe58cad9934faa0fdede167d9d4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -318,3 +320,4 @@ MonoBehaviour:
   damage: 20
   weaponCollider: {fileID: 846302844414992189}
   attackerStats: {fileID: 0}
+  slashEffectPrefab: {fileID: 0}

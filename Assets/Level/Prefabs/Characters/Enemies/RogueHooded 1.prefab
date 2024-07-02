@@ -178,6 +178,7 @@ MonoBehaviour:
   damage: 10
   weaponCollider: {fileID: 4843875146730307932}
   attackerStats: {fileID: 0}
+  slashEffectPrefab: {fileID: 0}
 --- !u!1 &8945744021204376463 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d32b4a7da53a194c831ddb22b612670,
@@ -263,6 +264,8 @@ MonoBehaviour:
   exp: 0
   damage: 10
   hitbox: {fileID: 0}
+  hitEffectPrefab: {fileID: 2944396702758532163, guid: 761dbe9ca3fcd5744985f7f07d667e41,
+    type: 3}
   type: 3
 --- !u!136 &5972219693218591666
 CapsuleCollider:
@@ -319,7 +322,7 @@ Animator:
   m_GameObject: {fileID: 8945744021204376463}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: da3971eef8263524789e4d368f543090, type: 3}
-  m_Controller: {fileID: 9100000, guid: a60945146aba5b7499b8419e4ee38012, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c09abe58cad9934faa0fdede167d9d4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -154,6 +154,7 @@ MonoBehaviour:
   damage: 10
   weaponCollider: {fileID: 8973071158984951071}
   attackerStats: {fileID: 0}
+  slashEffectPrefab: {fileID: 0}
 --- !u!65 &8973071158984951071
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -284,6 +285,8 @@ MonoBehaviour:
   exp: 0
   damage: 10
   hitbox: {fileID: 7174078776302513081}
+  hitEffectPrefab: {fileID: 2944396702758532163, guid: 761dbe9ca3fcd5744985f7f07d667e41,
+    type: 3}
   type: 4
 --- !u!136 &7174078776302513081
 CapsuleCollider:

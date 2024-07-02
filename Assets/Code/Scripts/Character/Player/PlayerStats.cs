@@ -28,6 +28,7 @@ public class PlayerStats: CharacterStats
 
     public override void TakeDamage(CharacterStats attackerStats, int damage)
     {
+        Instantiate(hitEffectPrefab, transform);
         health -= damage;
         healthBar.value = health;
         if (health <= 0)

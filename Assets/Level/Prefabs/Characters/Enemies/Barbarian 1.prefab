@@ -186,7 +186,7 @@ MonoBehaviour:
   isAttackMoving: 0
   attackMoveSpeed: 0
   meleeController: {fileID: 1363065624404077981}
-  spell: {fileID: 0}
+  spells: []
 --- !u!114 &8542498846456585688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,8 +204,12 @@ MonoBehaviour:
   mana: 100
   maxMana: 100
   level: 1
+  exp: 0
   damage: 10
   hitbox: {fileID: 0}
+  hitEffectPrefab: {fileID: 2944396702758532163, guid: 761dbe9ca3fcd5744985f7f07d667e41,
+    type: 3}
+  type: 0
 --- !u!136 &3575145081645492776
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -261,7 +265,7 @@ Animator:
   m_GameObject: {fileID: 370301598806911167}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: da3971eef8263524789e4d368f543090, type: 3}
-  m_Controller: {fileID: 9100000, guid: a60945146aba5b7499b8419e4ee38012, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c09abe58cad9934faa0fdede167d9d4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -314,3 +318,4 @@ MonoBehaviour:
   damage: 20
   weaponCollider: {fileID: 904092698811143455}
   attackerStats: {fileID: 0}
+  slashEffectPrefab: {fileID: 0}

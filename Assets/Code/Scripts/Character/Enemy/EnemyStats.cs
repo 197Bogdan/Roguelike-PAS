@@ -15,6 +15,7 @@ public class EnemyStats : CharacterStats
 
     public override void TakeDamage(CharacterStats attackerStats, int damage)
     {
+        Instantiate(hitEffectPrefab, transform);
         health -= damage;
         if (health <= 0)
         {
